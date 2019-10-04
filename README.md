@@ -1,2 +1,2 @@
 Antoine PELISSON
-Loïc SCHANEN
+<br/>Loïc SCHANEN
