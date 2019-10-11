@@ -3,14 +3,14 @@ import java.awt.event.*;
 import java.awt.geom.*;
 
 
-public class Interation implements MouseListener{
+public class Controller implements MouseListener{
 
 	enum State {IDLE, PRESSED, DRAGGED};
 	State state = State.IDLE;
 	Point2D p;
 	public static final int D_DRAG = 5;
 	
-	public Interation() {
+	public Controller() {
 		
 	}
 
