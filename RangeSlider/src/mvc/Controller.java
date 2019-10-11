@@ -1,6 +1,7 @@
 package mvc;
 import java.awt.event.*;
 import java.awt.geom.*;
+import mvc.Model;
 
 
 public class Controller implements MouseListener{
@@ -9,66 +10,76 @@ public class Controller implements MouseListener{
 	State state = State.IDLE;
 	Point2D p;
 	public static final int D_DRAG = 5;
+	public Model model;
 	
-	public Controller() {
-		
+	public Controller(Model model) {
+		this.model = model;
 	}
 
+	private void moveSlider(int x) {
+		int min = model.getMin();
+		int max = model.getMax();
+		if ((x < min) ||(max - x) > (x - min)) {
+			model.setMin(Math.max(x, model.ming));
+		} else {
+			model.setMax(Math.min(x, model.maxg));
+		}
+	}
+	
 	public void handle(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		p.setLocation(x, y);
 		
 		switch (state) {
 			
-		case IDLE:
-			switch (e.paramString()) {
-			
-			case "MOUSE_PRESSED":
-				p.setLocation(e.getX(), e.getY());
-				if (e.getButton() == MouseEvent.BUTTON1) {
-					//move le slider le plus proche sur le pointeur
-					state = State.PRESSED;
+			case IDLE:
+				switch (e.paramString()) {
+				
+				case "MOUSE_PRESSED":
+					if (e.getButton() == MouseEvent.BUTTON1) {
+						moveSlider(x);
+						state = State.PRESSED;
+					}
+				break;
 				}
 			break;
-			}
-		break;
-		
-		case PRESSED:
-			switch (e.paramString()) {
 			
-			case "MOUSE_DRAGGED":
-				p.setLocation(e.getX(), e.getY());
-				if (p.distance(e.getX(), e.getY()) >= D_DRAG) {
-					state = State.DRAGGED;
+			case PRESSED:
+				switch (e.paramString()) {
+				
+				case "MOUSE_DRAGGED":
+					if (p.distance(x, y) >= D_DRAG) {
+						state = State.DRAGGED;
+					}
+					moveSlider(x);
+				break;
+					
+				case "MOUSE_RELEASED":
+					state = State.IDLE;
+				break;
 				}
-				//move le slider le plus proche sur le pointeur
 			break;
 				
-			case "MOUSE_RELEASED":
-				//confirmer la valeur du slider
-				state = State.IDLE;
-			break;
-			}
-		break;
-			
-		case DRAGGED:
-			switch (e.paramString()) {
-			
-			case "MOUSE_RELEASED":
-				//confirmer la valeur du slider
-				state = State.IDLE;
-			break;
-			
-			case "MOUSE_DRAGGED":
-				if (p.distance(e.getX(), e.getY()) < D_DRAG) {
-					state = State.PRESSED;
-				} else {
-					//move le slider le plus proche sur le pointeur
+			case DRAGGED:
+				switch (e.paramString()) {
+				
+				case "MOUSE_RELEASED":
+					state = State.IDLE;
+				break;
+				
+				case "MOUSE_DRAGGED":
+					if (p.distance(x, y) < D_DRAG) {
+						state = State.PRESSED;
+					} else {
+						moveSlider(x);
+					}
+						
+				break;
+				
 				}
-					
 			break;
-			
-			}
-		break;
-			
+				
 		}						
 		
 	}
