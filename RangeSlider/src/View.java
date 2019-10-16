@@ -108,10 +108,10 @@ public class View extends JComponent {
 
 	private void dragged(MouseEvent e) {
 		Point p = e.getPoint();
-		if (left_button.contains(p)) {
+		if (left_button.contains(p) && p.x < right_button_x) {
 			left_button_x = p.x;
 		}
-		if (right_button.contains(p)) {
+		if (right_button.contains(p) && p.x > left_button_x) {
 			right_button_x = p.x;
 		}
 		this.createRectangle();
