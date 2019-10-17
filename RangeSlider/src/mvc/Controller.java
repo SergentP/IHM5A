@@ -28,14 +28,14 @@ public class Controller implements MouseListener, MouseMotionListener{
 		Point p = e.getPoint();
 		if (view.left_button.contains(p)) {
 			System.out.println("Left button clicked");
-			view.left_button_pressed = true;
+			model.left_button_pressed = true;
 
 		}
 		if (view.right_button.contains(p)) {
 			System.out.println("Right button clicked");
-			view.right_button_pressed = true;
+			model.right_button_pressed = true;
 		}
-		view.lastpoint = p;
+		model.lastpoint = p;
 	}
 
 	@Override
@@ -57,29 +57,29 @@ public class Controller implements MouseListener, MouseMotionListener{
 	public void mouseDragged(MouseEvent e) {
 		View view = (View) e.getSource();
 		Point p = e.getPoint();
-		if (view.left_button_pressed && p.x <= model.get_rbutton_x() - View.BUTTON_WIDTH && p.x >= view.min_x) {
+		if (model.left_button_pressed && p.x <= model.get_rbutton_x() - Model.BUTTON_WIDTH && p.x >= model.min_x) {
 			model.set_lbutton_x(p.x);
-			int val = (int)Math.round((p.x) * (model.get_maxg() - model.get_ming())/View.SLIDER_WIDTH + model.get_ming());
+			int val = (int)Math.round((p.x) * (model.get_max_val() - model.get_min_val())/Model.SLIDER_WIDTH + model.get_min_val());
 
-			if (p.x > view.lastpoint.x) {
+			if (p.x > model.lastpoint.x) {
 				model.set_lvalue(val);
 			}
-			if (p.x < view.lastpoint.x) {
+			if (p.x < model.lastpoint.x) {
 				model.set_lvalue(val);
 			}
 		}
-		if (view.right_button_pressed && p.x >= model.get_lbutton_x() + View.BUTTON_WIDTH && p.x <= view.max_x) {
+		if (model.right_button_pressed && p.x >= model.get_lbutton_x() + Model.BUTTON_WIDTH && p.x <= model.max_x) {
 			model.set_rbutton_x(p.x);
-			int val = (int)Math.round((p.x) * (model.get_maxg()- model.get_ming())/View.SLIDER_WIDTH + model.get_ming());
+			int val = (int)Math.round((p.x) * (model.get_max_val()- model.get_min_val())/Model.SLIDER_WIDTH + model.get_min_val());
 			
-			if (p.x > view.lastpoint.x) {
+			if (p.x > model.lastpoint.x) {
 				model.set_rvalue(val);
 			}
-			if (p.x < view.lastpoint.x) {
+			if (p.x < model.lastpoint.x) {
 				model.set_rvalue(val);
 			}
 		}
-		view.lastpoint = p;
+		model.lastpoint = p;
 		view.repaint();
 	}
 

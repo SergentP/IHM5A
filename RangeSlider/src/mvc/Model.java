@@ -1,41 +1,59 @@
 package mvc;
 
+import java.awt.Point;
+
 public class Model {
 	
-	private int maxg;
-	private int ming;
+	static final int SLIDER_WIDTH = 200;
+	static final int BUTTON_WIDTH = 20;
+	static final int HEIGHT = 20;
 	
-	private int lvalue;
-	private int rvalue;
+	private int max_val; // minimum of the slider values
+	private int min_val; // maximum of the slider values
 
-	private int lbutton_x;
-	private int rbutton_x;
+	int min_x; // minimum of the slider pixels
+	int max_x; // maximum of the slider pixels
 	
-	public Model(int min, int max, int l, int r, int lx, int rx) {
-		ming = min;
-		maxg = max;
+	private int lvalue; // value of the left slider
+	private int rvalue; // value of the right slider
+
+	private int lbutton_x; // value of the external side of the left button
+	private int rbutton_x; // value of the internal side of the left button
+	
+	boolean left_button_pressed;
+	boolean right_button_pressed;
+
+	Point lastpoint;
+	
+	public Model(int min, int max, int l, int r) {
+		min_val = min;
+		max_val = max;
 		lvalue = l;
 		rvalue = r;
-		lbutton_x = lx;
-		rbutton_x = rx;
+		lbutton_x = 0;
+		rbutton_x = SLIDER_WIDTH;
+		min_x = 0;
+		max_x = SLIDER_WIDTH;
+		left_button_pressed = false;
+		right_button_pressed = false;
 	}
 	
 // getters & setters //
 //
-	public int get_ming() {
-		return ming;
+	public int get_min_val() {
+		return min_val;
 	}
 	
-	public int get_maxg() {
-		return maxg;
+	public int get_max_val() {
+		return max_val;
 	}
 	
-	public void set_ming(int x) {
-		ming = x;
+	public void set_min_val(int x) {
+		min_val = x;
 	}
 	
-	public void set_maxg(int x) {
-		maxg = x;
+	public void set_max_val(int x) {
+		max_val = x;
 	}
 	
 	public int get_lvalue() {
