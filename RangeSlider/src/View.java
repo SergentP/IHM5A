@@ -2,23 +2,25 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class View extends JComponent {
+public class View extends JPanel {
 
 	private int max_val;
 	private int min_val;
-	private int inc;
+	private int lvalue;
+	private int rvalue;
 
 	private static final int SLIDER_WIDTH = 200;
-	private static final int BUTTON_WIDTH = 25;
+	private static final int BUTTON_WIDTH = 20;
 	private static final int HEIGHT = 20;
 
 	private int min_x = BUTTON_WIDTH;
@@ -26,98 +28,107 @@ public class View extends JComponent {
 
 	private int left_button_x;
 	private int right_button_x;
+	private Point lastpoint;
+
+	private boolean left_button_pressed = false;
+	private boolean right_button_pressed = false;
 
 	public JLabel left_label;
 	public JLabel right_label;
-	
-	Rectangle2D left_button;
-	Rectangle2D right_button;
-	Rectangle2D left_range;
+
+	Rectangle left_button;
+	Rectangle right_button;
+	Rectangle2D unselected_range;
 	Rectangle2D selected_range;
-	Rectangle2D right_range;
 
 	public View(int min, int max) {
 
 		min_val = min;
 		max_val = max;
-		
-		inc = SLIDER_WIDTH / (max_val - min_val);
-		
-		left_button_x = min_x;
-		right_button_x = min_x + SLIDER_WIDTH;
 
-		left_label = new JLabel(Integer.toString(min));
-		right_label = new JLabel(Integer.toString(max));
+		lvalue = min;
+		rvalue = max;
+
+		left_button_x = 0;
+		right_button_x = SLIDER_WIDTH;
 		
-		createRectangle();
+		left_label = new JLabel(""+lvalue);
+		right_label = new JLabel(""+rvalue);
+
+		this.add(left_label);
+		this.add(right_label);
+		
+		unselected_range = new Rectangle2D.Double(left_button_x, HEIGHT, right_button_x + BUTTON_WIDTH, HEIGHT);
+
 		setListener();
 
 	}
-	
-	private void createRectangle() {
-		
-		left_button = new Rectangle2D.Double(left_button_x - BUTTON_WIDTH / 2, HEIGHT, BUTTON_WIDTH, HEIGHT);
-		right_button = new Rectangle2D.Double(right_button_x - BUTTON_WIDTH / 2, HEIGHT, BUTTON_WIDTH, HEIGHT);
-		left_range = new Rectangle2D.Double(min_x, HEIGHT, left_button_x - BUTTON_WIDTH / 2 - min_x, HEIGHT);
-		selected_range = new Rectangle2D.Double(left_button_x + BUTTON_WIDTH / 2, HEIGHT, right_button_x - left_button_x - BUTTON_WIDTH, HEIGHT);
-		right_range = new Rectangle2D.Double(right_button_x + BUTTON_WIDTH / 2, HEIGHT, max_x - right_button_x - BUTTON_WIDTH / 2, HEIGHT);
-	}
 
-	public JLabel getLeftLabel() {
-		return left_label;
-	}
-
-	public JLabel getRightLabel() {
-		return right_label;
-	}
-	
 	private void setListener() {
-		
+
 		this.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				Point p = e.getPoint();
-				if (left_button.contains(p)) {
-					System.out.println("Left button clicked");
-				}
-				if (right_button.contains(p)) {
-					System.out.println("Right button clicked");
-				}
-				if (left_range.contains(p)) {
-					System.out.println("Left range clicked");
-				}
-				if (right_range.contains(p)) {
-					System.out.println("Right range clicked");
-				}
-				if (selected_range.contains(p)) {
-					System.out.println("Selected range clicked");
-				}
+				pressed(e);
 			}
-			
+
 			public void mouseReleased(MouseEvent e) {
-				
+				left_button_pressed = false;
+				right_button_pressed = false;
+
 			}
 		});
-		
+
 		this.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseDragged(MouseEvent e) {
 				dragged(e);
-				
+
 			}
 		});
+	}
+
+	private void pressed(MouseEvent e) {
+
+		Point p = e.getPoint();
+		if (left_button.contains(p)) {
+			System.out.println("Left button clicked");
+			left_button_pressed = true;
+
+		}
+		if (right_button.contains(p)) {
+			System.out.println("Right button clicked");
+			right_button_pressed = true;
+		}
+		lastpoint = p;
 	}
 
 	private void dragged(MouseEvent e) {
 		Point p = e.getPoint();
-		if (left_button.contains(p) && p.x < right_button_x) {
+		if (left_button_pressed && p.x <= right_button_x - BUTTON_WIDTH && p.x >= min_x-BUTTON_WIDTH) {
 			left_button_x = p.x;
+			int val = (int)Math.round((p.x) * (max_val - min_val)/SLIDER_WIDTH + min_val);
+
+			if (p.x > lastpoint.x) {
+				lvalue = val;
+			}
+			if (p.x < lastpoint.x) {
+				lvalue = val;
+			}
 		}
-		if (right_button.contains(p) && p.x > left_button_x) {
+		if (right_button_pressed && p.x >= left_button_x + BUTTON_WIDTH && p.x <= max_x-BUTTON_WIDTH) {
 			right_button_x = p.x;
+			int val = (int)Math.round((p.x) * (max_val- min_val)/SLIDER_WIDTH + min_val);
+			
+			if (p.x > lastpoint.x) {
+				rvalue = val;
+			}
+			if (p.x < lastpoint.x) {
+				rvalue = val;
+			}
 		}
-		this.createRectangle();
+		lastpoint = p;
 		this.repaint();
 	}
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 
@@ -125,16 +136,30 @@ public class View extends JComponent {
 
 		Graphics2D g2d = (Graphics2D) g;
 		
-		g2d.setColor(Color.WHITE);
-		g2d.fill(left_button);
-		g2d.fill(right_button);
+		left_button = new Rectangle(left_button_x, HEIGHT, BUTTON_WIDTH, HEIGHT);
+		right_button = new Rectangle(right_button_x, HEIGHT, BUTTON_WIDTH, HEIGHT);
+		selected_range = new Rectangle2D.Double(left_button.getCenterX(), HEIGHT, (right_button.getCenterX() - left_button.getCenterX()), HEIGHT);
+		
+		left_label.setBounds(left_button.getBounds());
+		left_label.setHorizontalAlignment(JLabel.CENTER);
+		left_label.setText(""+lvalue);
+		
+		right_label.setBounds(right_button.getBounds());
+		right_label.setHorizontalAlignment(JLabel.CENTER);
+		right_label.setText(Integer.toString(rvalue));
 		
 		g2d.setColor(Color.LIGHT_GRAY);
-		g2d.fill(left_range);
-		g2d.fill(right_range);
+		g2d.fill(unselected_range);
 
 		g2d.setColor(Color.GRAY);
 		g2d.fill(selected_range);
+		
+		g2d.setColor(Color.WHITE);
+		g2d.fill(left_button);
+		
+		g2d.setColor(Color.WHITE);
+		g2d.fill(right_button);
+		
 	}
 
 }
