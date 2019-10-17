@@ -34,7 +34,7 @@ public class Controller implements MouseListener, MouseMotionListener{
 		if ((view.selected_range.contains(p) || view.unselected_range.contains(p))) {
 			int dist_to_lbutton = p.x - (int) view.left_button.getCenterX();
 			int dist_to_rbutton = (int) view.right_button.getCenterX() - p.x;
-			int val = (int)Math.round((p.x) * (model.get_max_val() - model.get_min_val())/(Model.SLIDER_WIDTH - Model.BUTTON_WIDTH) + model.get_min_val());
+			int val = (int)Math.round((p.x) * (model.get_max_val() - model.get_min_val())/Model.SLIDER_WIDTH + model.get_min_val());
 			
 			if (dist_to_lbutton < dist_to_rbutton) {
 				model.set_lbutton_x(p.x - Model.BUTTON_WIDTH/2);

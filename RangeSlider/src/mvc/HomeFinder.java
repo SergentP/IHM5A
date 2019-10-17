@@ -1,8 +1,9 @@
 package mvc;
 
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -18,6 +19,10 @@ public class HomeFinder extends JPanel{
 	private Home houses[];
 	
 	public HomeFinder(View p, View r, int n) {
+		
+		Color background = new Color(44,181,85);
+		this.setBackground(background);
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		price = p;
 		room = r;
 		nb_house = n;
