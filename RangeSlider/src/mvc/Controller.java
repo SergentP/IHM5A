@@ -24,6 +24,23 @@ public class Controller implements MouseListener, MouseMotionListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		View view = (View) e.getSource();
+		Point p = e.getPoint();
+		if ((view.selected_range.contains(p) || view.unselected_range.contains(p))) {
+			int dist_to_lbutton = p.x - (int) view.left_button.getCenterX();
+			int dist_to_rbutton = (int) view.right_button.getCenterX() - p.x;
+			int val = (int)Math.round((p.x) * (model.get_max_val() - model.get_min_val())/(Model.SLIDER_WIDTH - Model.BUTTON_WIDTH) + model.get_min_val());
+			
+			if (dist_to_lbutton < dist_to_rbutton) {
+				model.set_lbutton_x(p.x);
+				model.set_lvalue(val);
+			} else if (p.x < model.max_x){
+				model.set_rbutton_x(p.x);
+				model.set_rvalue(val);
+			}
+		}
+		
+		view.repaint();
 		
 	}
 
@@ -32,12 +49,10 @@ public class Controller implements MouseListener, MouseMotionListener{
 		View view = (View) e.getSource();
 		Point p = e.getPoint();
 		if (view.left_button.contains(p)) {
-			System.out.println("Left button clicked");
 			model.left_button_pressed = true;
 
 		}
 		if (view.right_button.contains(p)) {
-			System.out.println("Right button clicked");
 			model.right_button_pressed = true;
 		}
 		model.lastpoint = p;
@@ -45,6 +60,8 @@ public class Controller implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		model.left_button_pressed = false;
+		model.right_button_pressed = false;
 		
 	}
 
@@ -64,7 +81,7 @@ public class Controller implements MouseListener, MouseMotionListener{
 		Point p = e.getPoint();
 		if (model.left_button_pressed && p.x <= model.get_rbutton_x() - Model.BUTTON_WIDTH && p.x >= model.min_x) {
 			model.set_lbutton_x(p.x);
-			int val = (int)Math.round((p.x) * (model.get_max_val() - model.get_min_val())/Model.SLIDER_WIDTH + model.get_min_val());
+			int val = (int)Math.round((p.x) * (model.get_max_val() - model.get_min_val())/(Model.SLIDER_WIDTH - Model.BUTTON_WIDTH) + model.get_min_val());
 
 			if (p.x > model.lastpoint.x) {
 				model.set_lvalue(val);
@@ -75,7 +92,7 @@ public class Controller implements MouseListener, MouseMotionListener{
 		}
 		if (model.right_button_pressed && p.x >= model.get_lbutton_x() + Model.BUTTON_WIDTH && p.x <= model.max_x) {
 			model.set_rbutton_x(p.x);
-			int val = (int)Math.round((p.x) * (model.get_max_val()- model.get_min_val())/Model.SLIDER_WIDTH + model.get_min_val());
+			int val = (int)Math.round((p.x) * (model.get_max_val()- model.get_min_val())/(Model.SLIDER_WIDTH) + model.get_min_val());
 			
 			if (p.x > model.lastpoint.x) {
 				model.set_rvalue(val);

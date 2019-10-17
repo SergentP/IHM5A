@@ -2,11 +2,7 @@ package mvc;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JLabel;
@@ -31,8 +27,8 @@ public class View extends JPanel {
 		model = new Model(min, max, min, max);
 		control = new Controller(model);
 		
-		left_label = new JLabel(""+ model.get_lvalue());
-		right_label = new JLabel(""+model.get_rvalue());
+		left_label = new JLabel();
+		right_label = new JLabel();
 
 		this.add(left_label);
 		this.add(right_label);
@@ -53,11 +49,11 @@ public class View extends JPanel {
 		
 		left_button = new Rectangle(model.get_lbutton_x(), Model.HEIGHT, Model.BUTTON_WIDTH, Model.HEIGHT);
 		right_button = new Rectangle(model.get_rbutton_x(), Model.HEIGHT, Model.BUTTON_WIDTH, Model.HEIGHT);
-		selected_range = new Rectangle2D.Double(left_button.getCenterX(), Model.HEIGHT, (right_button.getCenterX() - left_button.getCenterX()), Model.HEIGHT);
+		selected_range = new Rectangle2D.Double(left_button.getCenterX() + model.BUTTON_WIDTH/2, Model.HEIGHT, (right_button.getCenterX() - left_button.getCenterX() - model.BUTTON_WIDTH), Model.HEIGHT);
 		
 		left_label.setBounds(left_button.getBounds());
 		left_label.setHorizontalAlignment(JLabel.CENTER);
-		left_label.setText(""+model.get_lvalue());
+		left_label.setText(Integer.toString(model.get_lvalue()));
 		
 		right_label.setBounds(right_button.getBounds());
 		right_label.setHorizontalAlignment(JLabel.CENTER);
@@ -65,15 +61,27 @@ public class View extends JPanel {
 		
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.fill(unselected_range);
+		
+		g2d.setColor(Color.GRAY);
+		g2d.draw(unselected_range);
 
 		g2d.setColor(Color.GRAY);
 		g2d.fill(selected_range);
 		
+		g2d.setColor(Color.BLACK);
+		g2d.draw(selected_range);
+		
 		g2d.setColor(Color.WHITE);
 		g2d.fill(left_button);
 		
+		g2d.setColor(Color.BLACK);
+		g2d.draw(left_button);
+		
 		g2d.setColor(Color.WHITE);
 		g2d.fill(right_button);
+		
+		g2d.setColor(Color.BLACK);
+		g2d.draw(right_button);
 		
 	}
 
