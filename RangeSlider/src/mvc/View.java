@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class View extends JPanel {
 	
-	private Model model;
-	private Controller control;
+	Model model;
+	Controller control;
 
 	JLabel left_label;
 	JLabel right_label;

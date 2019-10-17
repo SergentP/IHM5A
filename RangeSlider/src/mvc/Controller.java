@@ -11,10 +11,15 @@ public class Controller implements MouseListener, MouseMotionListener{
 	State state = State.IDLE;
 	Point2D p;
 	public static final int D_DRAG = 5;
-	public Model model;
+	Model model;
+	HomeFinder hf;
 	
 	public Controller(Model model) {
 		this.model = model;
+	}
+	
+	public void addHF(HomeFinder hf) {
+		this.hf = hf;
 	}
 	
 	@Override
@@ -81,6 +86,7 @@ public class Controller implements MouseListener, MouseMotionListener{
 		}
 		model.lastpoint = p;
 		view.repaint();
+		hf.repaint();
 	}
 
 	@Override
