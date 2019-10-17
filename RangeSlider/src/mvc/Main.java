@@ -24,7 +24,7 @@ public class Main {
 		
 		frame.setLayout(new BorderLayout());
 		
-		JPanel price = new View(0,10);
+		JPanel price = new View(0,1000);
 		price.setPreferredSize(new Dimension(300,300));
 		price.setLayout(new BoxLayout(price, BoxLayout.PAGE_AXIS));
 

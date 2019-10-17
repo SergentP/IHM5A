@@ -5,7 +5,7 @@ import java.awt.Point;
 public class Model {
 	
 	static final int SLIDER_WIDTH = 200;
-	static final int BUTTON_WIDTH = 20;
+	static final int BUTTON_WIDTH = 33;
 	static final int HEIGHT = 20;
 	
 	private int max_val; // minimum of the slider values
