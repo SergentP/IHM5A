@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 public class Main {
 
-	private static final int WINDOW_WIDTH = 820;
+	private static final int WINDOW_WIDTH = 860;
 	private static final int WINDOW_HEIGHT = 600;
 
 	public static void affichage() {
@@ -24,7 +24,7 @@ public class Main {
 		
 		frame.setLayout(new BorderLayout());
 		
-		JPanel price = new View(0,99);
+		JPanel price = new View(100,500);
 		price.setPreferredSize(new Dimension(240,150));
 		JPanel room = new View(0, 10);
 		room.setPreferredSize(new Dimension(220,150));

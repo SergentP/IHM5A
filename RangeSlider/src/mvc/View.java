@@ -49,7 +49,7 @@ public class View extends JPanel {
 		
 		left_button = new Rectangle(model.get_lbutton_x(), Model.HEIGHT, Model.BUTTON_WIDTH, Model.HEIGHT);
 		right_button = new Rectangle(model.get_rbutton_x(), Model.HEIGHT, Model.BUTTON_WIDTH, Model.HEIGHT);
-		selected_range = new Rectangle2D.Double(left_button.getCenterX() + model.BUTTON_WIDTH/2, Model.HEIGHT, (right_button.getCenterX() - left_button.getCenterX() - model.BUTTON_WIDTH), Model.HEIGHT);
+		selected_range = new Rectangle2D.Double(left_button.getCenterX() + Model.BUTTON_WIDTH/2, Model.HEIGHT, (right_button.getCenterX() - left_button.getCenterX() - model.BUTTON_WIDTH), Model.HEIGHT);
 		
 		left_label.setBounds(left_button.getBounds());
 		left_label.setHorizontalAlignment(JLabel.CENTER);
