@@ -22,6 +22,7 @@ public class View extends JPanel {
 	private static final int SLIDER_WIDTH = 200;
 	private static final int BUTTON_WIDTH = 20;
 	private static final int HEIGHT = 20;
+	private static final int OFFSET = 30;
 
 	private int min_x = BUTTON_WIDTH;
 	private int max_x = min_x + SLIDER_WIDTH;

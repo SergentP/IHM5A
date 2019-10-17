@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class Main extends JFrame {
 
-	private static final int WINDOW_WIDTH = 300;
-	private static final int WINDOW_HEIGHT = 300;
+	private static final int WINDOW_WIDTH = 220;
+	private static final int WINDOW_HEIGHT = 100;
 
 	public Main() {
 
