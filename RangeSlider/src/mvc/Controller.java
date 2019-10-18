@@ -17,32 +17,39 @@ public class Controller implements MouseListener, MouseMotionListener{
 		this.hf = hf;
 	}
 	
-	/*private void moveSlider(int x) {
-	int min = model.get_lvalue();
-	int max = model.get_rvalue();
-	if ((x < min) ||(max - x) > (x - min)) {
-		model.set_ming(Math.max(x, model.get_ming()));
-	} else {
-		model.set_maxg(Math.min(x, model.get_maxg()));
-	}
-}*/
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		View view = (View) e.getSource();
 		Point p = e.getPoint();
 		if ((view.selected_range.contains(p) || view.unselected_range.contains(p))) {
-			int dist_to_lbutton = p.x - (int) view.left_button.getCenterX();
-			int dist_to_rbutton = (int) view.right_button.getCenterX() - p.x;
-			int val = (int)Math.round((p.x) * (model.get_max_val() - model.get_min_val())/Model.SLIDER_WIDTH + model.get_min_val());
-			
-			if (dist_to_lbutton < dist_to_rbutton) {
-				model.set_lbutton_x(p.x - Model.BUTTON_WIDTH/2);
-				model.set_lvalue(val);
-			} else if (p.x < model.max_x){
-				model.set_rbutton_x(p.x - Model.BUTTON_WIDTH/2);
-				model.set_rvalue(val);
+			int min = model.get_lbutton_x() + Model.BUTTON_WIDTH;
+			int max = model.get_rbutton_x();
+			if ((p.x < min) || (max - p.x) > (p.x - min)) {
+				int new_lv = model.get_min_val() + Math.round((p.x - Model.BUTTON_WIDTH/2) * (model.get_max_val()- model.get_min_val()) / (Model.SLIDER_WIDTH - Model.BUTTON_WIDTH));;
+				if (new_lv <= model.get_rvalue()) {
+					model.set_lbutton_x(p.x - Model.BUTTON_WIDTH/2);
+					model.set_lvalue(Math.max(new_lv, model.get_min_val()));
+				}
+			} else {
+				int new_rv = model.get_min_val() + Math.round((p.x - 3 * Model.BUTTON_WIDTH/2) * (model.get_max_val()- model.get_min_val())/(Model.SLIDER_WIDTH - Model.BUTTON_WIDTH));
+				if (new_rv >= model.get_lvalue()) {
+					model.set_rbutton_x(p.x - Model.BUTTON_WIDTH/2);
+					model.set_rvalue(Math.min(new_rv, model.get_max_val()));
+				}
 			}
+			
+			//			int dist_to_lbutton = p.x - (int) view.left_button.getCenterX();
+//			int dist_to_rbutton = (int) view.right_button.getCenterX() - p.x;
+//			int val = (int)Math.round((p.x) * (model.get_max_val() - model.get_min_val())/Model.SLIDER_WIDTH + model.get_min_val());
+//			
+//			if (dist_to_lbutton < dist_to_rbutton) {
+//				model.set_lbutton_x(p.x - Model.BUTTON_WIDTH/2);
+//				model.set_lvalue(val);
+//			} else if (p.x < model.max_x){
+//				model.set_rbutton_x(p.x - Model.BUTTON_WIDTH/2);
+//				model.set_rvalue(val);
+//			}
 		}
 		view.repaint();
 		hf.repaint();

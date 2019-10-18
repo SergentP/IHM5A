@@ -44,7 +44,7 @@ public class HomeFinder extends JPanel{
 		for (int i = 0; i < nb_house; i++) {
 			int p = houses[i].get_p();
 			int r = houses[i].get_r();
-			if (p_lvalue < p && p < p_rvalue && r_lvalue < r && r < r_rvalue) {
+			if (p_lvalue <= p && p <= p_rvalue && r_lvalue <= r && r <= r_rvalue) {
 				g.drawOval(houses[i].get_x(), houses[i].get_y(), 10, 10);
 			}
 		}
