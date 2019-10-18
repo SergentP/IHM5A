@@ -88,4 +88,23 @@ public class Model {
 		rbutton_x = x;
 	}
 	
+	public int get_min_x() {
+		return min_x;
+	}
+	
+	public int get_max_x() {
+		return max_x;
+	}
+	
+	public int get_height() {
+		return HEIGHT;
+	}
+	
+	public int get_slider_width() {
+		return SLIDER_WIDTH;
+	}
+	
+	public int get_button_width() {
+		return BUTTON_WIDTH;
+	}
 }

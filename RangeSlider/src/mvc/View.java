@@ -33,7 +33,7 @@ public class View extends JPanel {
 		this.add(left_label);
 		this.add(right_label);
 		
-		unselected_range = new Rectangle2D.Double(model.get_lbutton_x(), Model.HEIGHT, model.get_rbutton_x() + Model.BUTTON_WIDTH, Model.HEIGHT);
+		unselected_range = new Rectangle2D.Double(model.get_lbutton_x(), model.get_height(), model.get_rbutton_x() + model.get_button_width(), model.get_height());
 
 		this.addMouseListener(control);
 		this.addMouseMotionListener(control);
@@ -47,9 +47,9 @@ public class View extends JPanel {
 
 		Graphics2D g2d = (Graphics2D) g;
 		
-		left_button = new Rectangle(model.get_lbutton_x(), Model.HEIGHT, Model.BUTTON_WIDTH, Model.HEIGHT);
-		right_button = new Rectangle(model.get_rbutton_x(), Model.HEIGHT, Model.BUTTON_WIDTH, Model.HEIGHT);
-		selected_range = new Rectangle2D.Double(left_button.getCenterX() + Model.BUTTON_WIDTH/2, Model.HEIGHT, (right_button.getCenterX() - left_button.getCenterX() - model.BUTTON_WIDTH), Model.HEIGHT);
+		left_button = new Rectangle(model.get_lbutton_x(), model.get_height(), model.get_button_width(), model.get_height());
+		right_button = new Rectangle(model.get_rbutton_x(), model.get_height(), model.get_button_width(), model.get_height());
+		selected_range = new Rectangle2D.Double(left_button.getCenterX() + model.get_button_width()/2, model.get_height(), (right_button.getCenterX() - left_button.getCenterX() - model.get_button_width()), model.get_height());
 		
 		left_label.setBounds(left_button.getBounds());
 		left_label.setHorizontalAlignment(JLabel.CENTER);
@@ -82,6 +82,9 @@ public class View extends JPanel {
 		
 		g2d.setColor(Color.BLACK);
 		g2d.draw(right_button);
+		
+		g.drawString(Integer.toString(model.get_min_val()), model.get_min_x(), model.get_height() - 5);
+		g.drawString(Integer.toString(model.get_max_val()), model.get_max_x() + 15, model.get_height() - 5);
 		
 	}
 

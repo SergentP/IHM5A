@@ -29,21 +29,21 @@ public class Main {
 		JPanel sliders = new JPanel();
 		sliders.setLayout(new BoxLayout(sliders, BoxLayout.PAGE_AXIS));
 		
-		View price = new View(0,99);
+		View price = new View(50,500);
 		price.setPreferredSize(new Dimension(300,150));
-		JLabel price_label = new JLabel("Price");
+		JLabel price_label = new JLabel("Cost (k$)");
 		
 		sliders.add(price_label);
 		sliders.add(price);
 		
 		View room = new View(0, 10);
 		room.setPreferredSize(new Dimension(300,150));
-		JLabel room_label = new JLabel("Room number");
+		JLabel room_label = new JLabel("Bedrooms");
 		
 		sliders.add(room_label);
 		sliders.add(room);
 		
-		JPanel homefinder = new HomeFinder(price, room, 100);
+		JPanel homefinder = new HomeFinder(price, room, 50);
 		price.control.addHF((HomeFinder)homefinder);
 		room.control.addHF((HomeFinder)homefinder);
 		homefinder.setPreferredSize(new Dimension(HomeFinder.X_AXIS, HomeFinder.Y_AXIS));

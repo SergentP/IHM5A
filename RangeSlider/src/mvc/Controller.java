@@ -23,33 +23,21 @@ public class Controller implements MouseListener, MouseMotionListener{
 		View view = (View) e.getSource();
 		Point p = e.getPoint();
 		if ((view.selected_range.contains(p) || view.unselected_range.contains(p))) {
-			int min = model.get_lbutton_x() + Model.BUTTON_WIDTH;
+			int min = model.get_lbutton_x() + model.get_button_width();
 			int max = model.get_rbutton_x();
 			if ((p.x < min) || (max - p.x) > (p.x - min)) {
-				int new_lv = model.get_min_val() + Math.round((p.x - Model.BUTTON_WIDTH/2) * (model.get_max_val()- model.get_min_val()) / (Model.SLIDER_WIDTH - Model.BUTTON_WIDTH));;
+				int new_lv = model.get_min_val() + Math.round((p.x - model.get_button_width()/2) * (model.get_max_val()- model.get_min_val()) / (model.get_slider_width() - model.get_button_width()));;
 				if (new_lv <= model.get_rvalue()) {
-					model.set_lbutton_x(p.x - Model.BUTTON_WIDTH/2);
+					model.set_lbutton_x(p.x - model.get_button_width()/2);
 					model.set_lvalue(Math.max(new_lv, model.get_min_val()));
 				}
 			} else {
-				int new_rv = model.get_min_val() + Math.round((p.x - 3 * Model.BUTTON_WIDTH/2) * (model.get_max_val()- model.get_min_val())/(Model.SLIDER_WIDTH - Model.BUTTON_WIDTH));
+				int new_rv = model.get_min_val() + Math.round((p.x - 3 * model.get_button_width()/2) * (model.get_max_val()- model.get_min_val())/(model.get_slider_width() - model.get_button_width()));
 				if (new_rv >= model.get_lvalue()) {
-					model.set_rbutton_x(p.x - Model.BUTTON_WIDTH/2);
+					model.set_rbutton_x(p.x - model.get_button_width()/2);
 					model.set_rvalue(Math.min(new_rv, model.get_max_val()));
 				}
 			}
-			
-			//			int dist_to_lbutton = p.x - (int) view.left_button.getCenterX();
-//			int dist_to_rbutton = (int) view.right_button.getCenterX() - p.x;
-//			int val = (int)Math.round((p.x) * (model.get_max_val() - model.get_min_val())/Model.SLIDER_WIDTH + model.get_min_val());
-//			
-//			if (dist_to_lbutton < dist_to_rbutton) {
-//				model.set_lbutton_x(p.x - Model.BUTTON_WIDTH/2);
-//				model.set_lvalue(val);
-//			} else if (p.x < model.max_x){
-//				model.set_rbutton_x(p.x - Model.BUTTON_WIDTH/2);
-//				model.set_rvalue(val);
-//			}
 		}
 		view.repaint();
 		hf.repaint();
@@ -90,14 +78,14 @@ public class Controller implements MouseListener, MouseMotionListener{
 	public void mouseDragged(MouseEvent e) {
 		View view = (View) e.getSource();
 		Point p = e.getPoint();
-		if (model.left_button_pressed && p.x <= model.get_rbutton_x() - Model.BUTTON_WIDTH/2 && p.x >= model.min_x + Model.BUTTON_WIDTH/2) {
-			model.set_lbutton_x(p.x - Model.BUTTON_WIDTH/2);
-			int val = model.get_min_val() + Math.round((p.x - Model.BUTTON_WIDTH/2) * (model.get_max_val()- model.get_min_val()) / (Model.SLIDER_WIDTH - Model.BUTTON_WIDTH));
+		if (model.left_button_pressed && p.x <= model.get_rbutton_x() - model.get_button_width()/2 && p.x >= model.min_x + model.get_button_width()/2) {
+			model.set_lbutton_x(p.x - model.get_button_width()/2);
+			int val = model.get_min_val() + Math.round((p.x - model.get_button_width()/2) * (model.get_max_val()- model.get_min_val()) / (model.get_slider_width() - model.get_button_width()));
 			model.set_lvalue(val);
 		}
-		if (model.right_button_pressed && p.x >= model.get_lbutton_x() + Model.BUTTON_WIDTH*3/2 && p.x <= model.max_x + Model.BUTTON_WIDTH/2) {
-			model.set_rbutton_x(p.x - Model.BUTTON_WIDTH/2);
-			int val = model.get_min_val() + Math.round((p.x - 3 * Model.BUTTON_WIDTH/2) * (model.get_max_val()- model.get_min_val())/(Model.SLIDER_WIDTH - Model.BUTTON_WIDTH));
+		if (model.right_button_pressed && p.x >= model.get_lbutton_x() + model.get_button_width()*3/2 && p.x <= model.max_x + model.get_button_width()/2) {
+			model.set_rbutton_x(p.x - model.get_button_width()/2);
+			int val = model.get_min_val() + Math.round((p.x - 3 * model.get_button_width()/2) * (model.get_max_val()- model.get_min_val())/(model.get_slider_width() - model.get_button_width()));
 			model.set_rvalue(val);
 		}
 		view.repaint();
