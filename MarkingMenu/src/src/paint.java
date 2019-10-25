@@ -20,7 +20,7 @@ import java.awt.Point;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.RenderingHints;
-
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
@@ -30,6 +30,7 @@ import javax.swing.event.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
@@ -39,7 +40,8 @@ import javax.swing.SwingUtilities;
 @SuppressWarnings("serial")
 class Paint extends JFrame {
 	Vector<Shape> shapes = new Vector<Shape>();
-
+	Color c = Color.BLACK;
+	
 	class Tool extends AbstractAction
 	           implements MouseInputListener {
 	   Point o;
@@ -86,21 +88,58 @@ class Paint extends JFrame {
 				             abs(e.getX()- o.getX()), abs(e.getY()- o.getY()));
 				panel.repaint();
 			}
+		},
+		new Tool("ellipse") {
+			public void mouseDragged(MouseEvent e) {
+				Ellipse2D.Double ell = (Ellipse2D.Double)shape;
+				if(ell == null) {
+					ell = new Ellipse2D.Double(o.getX(), o.getY(), 0, 0);
+					shapes.add(shape = ell);
+				}
+				ell.setFrame(min(e.getX(), o.getX()), min(e.getY(), o.getY()),
+				             abs(e.getX()- o.getX()), abs(e.getY()- o.getY()));
+				panel.repaint();
+			}
 		}
 	};
 	Tool tool;
-
+	
 	JPanel panel;
 	
 	public Paint(String title) {
 		super(title);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
+		
+		final JButton red = new JButton();
+		red.setBackground(Color.RED);
+		red.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c = Color.RED;
+			}
+		});
+		
+		final JButton black = new JButton();
+		black.setBackground(Color.BLACK);
+		black.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c = Color.BLACK;
+			}
+		});
+		
+		add(new JToolBar() {
+			{
+				add(black);
+				add(red);
+
+		}}, BorderLayout.SOUTH);
+		
 		add(new JToolBar() {{
 			for(AbstractAction tool: tools) {
 				add(tool);
 			}
 		}}, BorderLayout.NORTH);
+		
 		add(panel = new JPanel() {	
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);	
@@ -110,9 +149,10 @@ class Paint extends JFrame {
 		
 				g2.setColor(Color.WHITE);
 				g2.fillRect(0, 0, getWidth(), getHeight());
-				
-				g2.setColor(Color.BLACK);
+
+				g2.setColor(c);
 				for(Shape shape: shapes) {
+					
 					g2.draw(shape);
 				}
 			}
@@ -121,7 +161,6 @@ class Paint extends JFrame {
 		pack();
 		setVisible(true);
 	}
-
 
 /* main *********************************************************************/
 
