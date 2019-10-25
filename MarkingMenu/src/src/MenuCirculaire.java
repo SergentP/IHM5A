@@ -8,8 +8,6 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,19 +25,7 @@ public class MenuCirculaire extends JFrame {
 		}
 	}
 	
-	MenuItem items[] = {
-			new MenuItem("a") {},
-			new MenuItem("b") {},
-			new MenuItem("c") {},
-			new MenuItem("d") {},
-			new MenuItem("e") {},
-			new MenuItem("e") {},
-			new MenuItem("f") {},
-			new MenuItem("g") {},
-			new MenuItem("h") {},
-			new MenuItem("j") {},
-			new MenuItem("i") {}
-	};
+	MenuItem items[];
 	JPanel panel;
 	
 	
@@ -72,8 +58,12 @@ public class MenuCirculaire extends JFrame {
 		public void mouseExited(MouseEvent e) {}
 	}
 	
-	public MenuCirculaire(String title) {
+	public MenuCirculaire(String title, int nb_b, String label[]) {
 		super(title);
+		items = new MenuItem[nb_b];
+		for (int i = 0; i < nb_b; i++) {
+			items[i] = new MenuItem(label[i]);
+		}
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
 		panel = new JPanel() {	
@@ -107,7 +97,8 @@ public class MenuCirculaire extends JFrame {
 	public static void main(String argv[]) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new MenuCirculaire("Menu Circulaire");
+				String labels[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
+				new MenuCirculaire("Menu Circulaire", labels.length, labels);
 			}
 		});
 	}
