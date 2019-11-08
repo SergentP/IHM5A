@@ -50,7 +50,6 @@ public class MenuCirculaire extends JFrame {
 	};
 	
 	private class ML implements MouseListener {
-
 		public void mouseClicked(MouseEvent e) {System.out.println("button pressed");}
 		public void mousePressed(MouseEvent e) {}
 		public void mouseReleased(MouseEvent e) {}
@@ -58,29 +57,18 @@ public class MenuCirculaire extends JFrame {
 		public void mouseExited(MouseEvent e) {}
 	}
 	
-	public MenuCirculaire(String title, int nb_b, String label[]) {
+	public MenuCirculaire(String title, int nb_b, String label[], JPanel p) {
 		super(title);
+		panel = p;
 		items = new MenuItem[nb_b];
 		for (int i = 0; i < nb_b; i++) {
 			items[i] = new MenuItem(label[i]);
 		}
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
-		panel = new JPanel() {	
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);	
-				Graphics2D g2 = (Graphics2D)g;
-				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-				                    RenderingHints.VALUE_ANTIALIAS_ON);
-		
-				g2.setColor(Color.WHITE);
-				g2.fillRect(0, 0, getWidth(), getHeight());
-			}
-		};
 		panel.setLayout(null);
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
-				System.out.println("[" + coord_circ[i].x + ", " + coord_circ[i].y + "]");
 				items[i].setBounds(380 + coord_circ[i].x, 200 + coord_circ[i].y, 50, 30);
 			} else {
 				items[i].setBounds(380, 300 + (i-7)*40, 50, 30);
@@ -98,8 +86,19 @@ public class MenuCirculaire extends JFrame {
 	public static void main(String argv[]) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				JPanel panel = new JPanel() {	
+					public void paintComponent(Graphics g) {
+						super.paintComponent(g);	
+						Graphics2D g2 = (Graphics2D)g;
+						g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
+						                    RenderingHints.VALUE_ANTIALIAS_ON);
+				
+						g2.setColor(Color.WHITE);
+						g2.fillRect(0, 0, getWidth(), getHeight());
+					}
+				};
 				String labels[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
-				new MenuCirculaire("Menu Circulaire", labels.length, labels);
+				new MenuCirculaire("Menu Circulaire", labels.length, labels, panel);
 			}
 		});
 	}
