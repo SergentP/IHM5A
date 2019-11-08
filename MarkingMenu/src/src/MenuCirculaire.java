@@ -40,12 +40,12 @@ public class MenuCirculaire extends JFrame {
 	
 	Point coord_circ[] = {
 		polar(pi,100), 
-		polar(pi*3/4,100), 
-		polar(pi*1/2,100), 
-		polar(pi*1/4,100), 
 		polar(0,100), 
-		polar(pi*7/4,100), 
 		polar(pi*3/2,100), 
+		polar(pi*1/2,100),
+		polar(pi*3/4,100), 
+		polar(pi*1/4,100), 
+		polar(pi*7/4,100),  
 		polar(pi*5/4,100)
 	};
 	
@@ -80,6 +80,7 @@ public class MenuCirculaire extends JFrame {
 		panel.setLayout(null);
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
+				System.out.println("[" + coord_circ[i].x + ", " + coord_circ[i].y + "]");
 				items[i].setBounds(380 + coord_circ[i].x, 200 + coord_circ[i].y, 50, 30);
 			} else {
 				items[i].setBounds(380, 300 + (i-7)*40, 50, 30);
