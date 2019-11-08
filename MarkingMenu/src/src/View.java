@@ -15,20 +15,7 @@ import src.Model;
 @SuppressWarnings("serial")
 public class View extends JPanel{
 	
-	Model.type type;
-	
-	public View (int nb_b, String label[], Model.type type) {
-		this.type = type;
-		switch(type) {
-		case paint:
-			
-			break;
-			
-		case menu:
-			
-			break;
-		}
-		
+	public View (int nb_b, String label[]) {
 		MenuItem[] items = new MenuItem[nb_b];
 		for (int i = 0; i < nb_b; i++) {
 			items[i] = new MenuItem(label[i]);
@@ -49,21 +36,13 @@ public class View extends JPanel{
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		switch(type) {
-		case paint:
-			super.paintComponent(g);	
-			Graphics2D g2 = (Graphics2D)g;
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-			                    RenderingHints.VALUE_ANTIALIAS_ON);
+		super.paintComponent(g);	
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
+		                    RenderingHints.VALUE_ANTIALIAS_ON);
 
-			g2.setColor(Color.WHITE);
-			g2.fillRect(0, 0, getWidth(), getHeight());
-			break;
-			
-		case menu:
-			
-			break;
-		}		
+		g2.setColor(Color.WHITE);
+		g2.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
 }

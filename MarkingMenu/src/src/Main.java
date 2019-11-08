@@ -6,7 +6,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import src.Model.type;
 import src.View;
 
 public class Main {
@@ -30,8 +29,7 @@ public class Main {
 		JPanel main_panel = new JPanel();
 		main_panel.setLayout(new BoxLayout(main_panel, BoxLayout.PAGE_AXIS));
 		
-		View main_view = new View(0, null, type.paint);
-		main_panel.add(main_view);
+		
 		
 		frame.getContentPane().add(main_panel,BorderLayout.CENTER);
 	}

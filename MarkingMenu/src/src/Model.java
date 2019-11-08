@@ -5,8 +5,6 @@ import java.awt.Point;
 public class Model {
 
 	MenuItem items[];
-	
-	enum type {paint, menu};
 
 	static String labels[];
 	
