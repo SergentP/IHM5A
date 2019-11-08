@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 @SuppressWarnings("serial")
 public class MenuCirculaire extends JFrame {
 
-	class MenuItem extends JButton {
+	static class MenuItem extends JButton {
 		
 		Point p;
 		
@@ -49,7 +49,7 @@ public class MenuCirculaire extends JFrame {
 		polar(pi*5/4,100)
 	};
 	
-	private class ML implements MouseListener {
+	public static class ML implements MouseListener {
 		public void mouseClicked(MouseEvent e) {System.out.println("button pressed");}
 		public void mousePressed(MouseEvent e) {}
 		public void mouseReleased(MouseEvent e) {}

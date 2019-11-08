@@ -5,19 +5,21 @@ import java.awt.Point;
 public class Model {
 
 	MenuItem items[];
+	
+	enum type {paint, menu};
 
-	String labels[];
+	static String labels[];
 	
-	double pi = Math.PI;
+	static double pi = Math.PI;
 	
-	public Point polar(double t, double d) {	      
+	public static Point polar(double t, double d) {	      
 	      double x = d * Math.cos(t);
 	      double y = d * Math.sin(t);
 	      
 	      return new Point((int) x,(int) y);
 	}
 	
-	Point coord_circ[] = {
+	static Point coord_circ[] = {
 		polar(pi,100), 
 		polar(0,100), 
 		polar(pi*3/2,100), 
