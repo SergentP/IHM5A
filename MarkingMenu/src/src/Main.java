@@ -1,12 +1,14 @@
 package src;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
+
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import src.View;
+import src.Model.viewtype;
 
 public class Main {
 	
@@ -26,12 +28,14 @@ public class Main {
 		BorderLayout layout = new BorderLayout();
 		frame.setLayout(layout);
 		
-		JPanel main_panel = new JPanel();
-		main_panel.setLayout(new BoxLayout(main_panel, BoxLayout.PAGE_AXIS));
+		String labels[] = {"Tools", "Colours"};
 		
+		View paint = new View(0, labels, new Point(0,0), viewtype.paint);
 		
+		paint.setLayout(new BoxLayout(paint, BoxLayout.PAGE_AXIS));
 		
-		frame.getContentPane().add(main_panel,BorderLayout.CENTER);
+		frame.getContentPane().add(paint,BorderLayout.CENTER);
+		frame.setVisible(true);
 	}
 	
 	public static void main(String args[]) {

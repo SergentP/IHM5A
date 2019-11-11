@@ -1,12 +1,20 @@
 package src;
 
+import java.awt.Color;
 import java.awt.Point;
+import java.util.Vector;
 
 public class Model {
 
+	enum viewtype {paint, menu};
+	enum contrtype {paint, menu};
+	
+	Vector<ColoredShape> shapes = new Vector<ColoredShape>();
+	Color c = Color.BLACK;
+	Tool tool;
+	
 	MenuItem items[];
-
-	static String labels[];
+	String labels[];
 	
 	static double pi = Math.PI;
 	
@@ -28,12 +36,13 @@ public class Model {
 		polar(pi*5/4,100)
 	};
 	
-	public Model(String l[]) {
-		
-		this.labels = new String[l.length];
-		this.labels = l;
-
-		
+	public Model(String l[], boolean paint) {
+		labels = new String[l.length];
+		items = new MenuItem[l.length];
+		labels = l;
+		for (int i = 0; i < labels.length; i++) {
+			items[i] = new MenuItem(labels[i]);
+		}
 	}
 	
 }

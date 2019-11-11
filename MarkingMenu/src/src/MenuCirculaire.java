@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
-public class MenuCirculaire extends JFrame {
+public class MenuCirculaire extends JPanel {
 
 	static class MenuItem extends JButton {
 		
@@ -57,16 +57,13 @@ public class MenuCirculaire extends JFrame {
 		public void mouseExited(MouseEvent e) {}
 	}
 	
-	public MenuCirculaire(String title, int nb_b, String label[], JPanel p) {
-		super(title);
-		panel = p;
+	public MenuCirculaire(int nb_b, String label[]) {
 		items = new MenuItem[nb_b];
 		for (int i = 0; i < nb_b; i++) {
 			items[i] = new MenuItem(label[i]);
 		}
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setMinimumSize(new Dimension(800, 600));
-		panel.setLayout(null);
+		this.setLayout(null);
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
 				items[i].setBounds(380 + coord_circ[i].x, 200 + coord_circ[i].y, 50, 30);
@@ -75,30 +72,29 @@ public class MenuCirculaire extends JFrame {
 			}
 			
 			items[i].addMouseListener(new ML());
-			panel.add(items[i]);
+			this.add(items[i]);
 		}
-		add(panel);
-
-		pack();
-		setVisible(true);
 	}
+	
+	private static final int WINDOW_WIDTH = 1000;
+	private static final int WINDOW_HEIGHT = 650;
 
 	public static void main(String argv[]) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JPanel panel = new JPanel() {	
-					public void paintComponent(Graphics g) {
-						super.paintComponent(g);	
-						Graphics2D g2 = (Graphics2D)g;
-						g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-						                    RenderingHints.VALUE_ANTIALIAS_ON);
 				
-						g2.setColor(Color.WHITE);
-						g2.fillRect(0, 0, getWidth(), getHeight());
-					}
-				};
+				JFrame frame = new JFrame("menucirculaire");
+				frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+				frame.setResizable(true);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+				frame.setLocationRelativeTo(null);
+				
 				String labels[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
-				new MenuCirculaire("Menu Circulaire", labels.length, labels, panel);
+				JPanel menucirc = new MenuCirculaire(labels.length, labels);
+				frame.add(menucirc);
+				
+				frame.setVisible(true);
 			}
 		});
 	}
