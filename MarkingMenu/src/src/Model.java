@@ -5,6 +5,9 @@ import java.awt.Point;
 import java.util.Vector;
 
 public class Model {
+	
+	static final int WINDOW_WIDTH = 1000;
+	static final int WINDOW_HEIGHT = 650;
 
 	enum viewtype {paint, menu};
 	enum contrtype {paint, menu, tool};

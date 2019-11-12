@@ -23,9 +23,8 @@ public class View extends JPanel{
 		model = new Model(label,(type == viewtype.paint));
 		this.type = type;
 		if (type == viewtype.paint) {
-			controller = new Controller(model, contrtype.paint, null);
+			controller = new Controller(model, contrtype.paint, model.tool);
 		} else {
-
 			controller = new Controller(model, contrtype.menu, null);
 		}
 		
@@ -73,7 +72,7 @@ public class View extends JPanel{
 			setLayout(null);
 			for (int i = 0; i < items.length; i++) {
 				if (i < 8) {
-					items[i].setBounds(p.x + Model.coord_circ[i].x, p.y + Model.coord_circ[i].y, 50, 30);
+					items[i].setBounds(p.x + Model.coord_circ[i].x, p.y + Model.coord_circ[i].y, 150, 30);
 				} else {
 					items[i].setBounds(p.x, p.y + (i-7)*40, 50, 30);
 				}

@@ -6,19 +6,17 @@ import java.awt.Point;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 
 import src.View;
 import src.Model.viewtype;
 
 public class Main {
 	
-	private static final int WINDOW_WIDTH = 1000;
-	private static final int WINDOW_HEIGHT = 650;
-	
 	public static void affichage() {
 		JFrame frame = new JFrame();
 		frame.setTitle("Range Slider");
-		frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		frame.setSize(Model.WINDOW_WIDTH, Model.WINDOW_HEIGHT);
 		
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,13 +26,18 @@ public class Main {
 		BorderLayout layout = new BorderLayout();
 		frame.setLayout(layout);
 		
+		JLayeredPane layer = frame.getLayeredPane();
+		layer.setSize(frame.getSize());
+		
 		String labels[] = {"Tools", "Colours"};
 		
-		View paint = new View(0, labels, new Point(0,0), viewtype.paint);
+		View paint = new View(2, labels, new Point(0,0), viewtype.paint);
 		
-		paint.setLayout(new BoxLayout(paint, BoxLayout.PAGE_AXIS));
+		//paint.setLayout(new BoxLayout(paint, BoxLayout.PAGE_AXIS));
+		paint.setBounds(0, 0, Model.WINDOW_WIDTH, Model.WINDOW_HEIGHT);
 		
-		frame.getContentPane().add(paint,BorderLayout.CENTER);
+		//frame.getContentPane().add(paint,BorderLayout.CENTER);
+		layer.add(paint, JLayeredPane.FRAME_CONTENT_LAYER);
 		frame.setVisible(true);
 	}
 	
