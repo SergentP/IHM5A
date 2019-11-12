@@ -7,11 +7,15 @@ import java.util.Vector;
 public class Model {
 
 	enum viewtype {paint, menu};
-	enum contrtype {paint, menu};
+	enum contrtype {paint, menu, tool};
 	
 	Vector<ColoredShape> shapes = new Vector<ColoredShape>();
-	Color c = Color.BLACK;
-	Tool tool;
+
+	Tool tools[] = {new Tool("Pen", this), new Tool("Rectangle", this), new Tool("Ellipse", this)};
+	Tool tool = tools[0];
+	
+	Color colors[] = {Color.BLACK, Color.DARK_GRAY, Color.GRAY, Color.LIGHT_GRAY, Color.WHITE, Color.BLUE, Color.CYAN, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED, Color.MAGENTA, Color.PINK};
+	Color c = colors[0];
 	
 	MenuItem items[];
 	String labels[];
