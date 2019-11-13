@@ -6,11 +6,6 @@ import java.util.Vector;
 
 public class Model {
 	
-	static final int WINDOW_WIDTH = 1000;
-	static final int WINDOW_HEIGHT = 650;
-
-	enum viewtype {paint, menu};
-	enum contrtype {paint, menu, tool};
 	
 	Vector<ColoredShape> shapes = new Vector<ColoredShape>();
 
@@ -43,7 +38,7 @@ public class Model {
 		polar(pi*5/4,100)
 	};
 	
-	public Model(String l[], boolean paint) {
+	public Model(String l[]) {
 		labels = new String[l.length];
 		items = new MenuItem[l.length];
 		labels = l;

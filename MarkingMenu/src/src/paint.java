@@ -7,31 +7,29 @@
 
 package src;
 
-import static java.lang.Math.*;
-
-import java.util.Vector;
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.Point;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.RenderingHints;
+import java.awt.Point;
+import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Vector;
 
-import java.awt.event.*;
-import javax.swing.event.*;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
+import javax.swing.event.MouseInputListener;
 
 /* paint *******************************************************************/
 
@@ -39,6 +37,7 @@ import javax.swing.SwingUtilities;
 class Paint extends JFrame {
 	Vector<ColoredShape> shapes = new Vector<ColoredShape>();
 	Color c = Color.BLACK;
+	Canvas can;
 
 	class Tool extends AbstractAction implements MouseInputListener {
 		Point o;
@@ -50,14 +49,17 @@ class Paint extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("using tool " + this);
-			panel.removeMouseListener(tool);
-			panel.removeMouseMotionListener(tool);
+			can.removeMouseListener(tool);
+			can.removeMouseMotionListener(tool);
 			tool = this;
-			panel.addMouseListener(tool);
-			panel.addMouseMotionListener(tool);
+			can.addMouseListener(tool);
+			can.addMouseMotionListener(tool);
 		}
 
 		public void mouseClicked(MouseEvent e) {
+			if(e.getButton() == MouseEvent.BUTTON3) {
+	            System.out.println("Right Click!");
+	          }
 		}
 
 		public void mouseEntered(MouseEvent e) {
@@ -91,7 +93,7 @@ class Paint extends JFrame {
 				shapes.add(cs);
 			}
 			path.lineTo(e.getX(), e.getY());
-			panel.repaint();
+			can.repaint();
 		}
 	}, new Tool("rect") {
 		public void mouseDragged(MouseEvent e) {
@@ -103,7 +105,7 @@ class Paint extends JFrame {
 			}
 			rect.setRect(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
 					abs(e.getY() - o.getY()));
-			panel.repaint();
+			can.repaint();
 		}
 	}, new Tool("ellipse") {
 		public void mouseDragged(MouseEvent e) {
@@ -115,7 +117,7 @@ class Paint extends JFrame {
 			}
 			ell.setFrame(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
 					abs(e.getY() - o.getY()));
-			panel.repaint();
+			can.repaint();
 		}
 	} };
 	Tool tool;
@@ -159,22 +161,9 @@ class Paint extends JFrame {
 			}
 		}, BorderLayout.NORTH);
 
-		add(panel = new JPanel() {
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				Graphics2D g2 = (Graphics2D) g;
-				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-				g2.setColor(Color.WHITE);
-				g2.fillRect(0, 0, getWidth(), getHeight());
-
-				for (ColoredShape shape : shapes) {
-					
-					g2.setColor(shape.getColor());
-					g2.draw(shape.getShape());
-				}
-			}
-		});
+		can = new Canvas();
+		
+		add(can);
 
 		pack();
 		setVisible(true);
@@ -185,6 +174,7 @@ class Paint extends JFrame {
 	public static void main(String argv[]) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				@SuppressWarnings("unused")
 				Paint paint = new Paint("paint");
 			}
 		});

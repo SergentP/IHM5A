@@ -1,48 +1,40 @@
 package src;
 
-import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Point;
 
-
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
+import javax.swing.SwingUtilities;
 
-import src.View;
-import src.Model.viewtype;
+@SuppressWarnings("serial")
+class Main extends JFrame {
 
-public class Main {
-	
-	public static void affichage() {
-		JFrame frame = new JFrame();
-		frame.setTitle("Range Slider");
-		frame.setSize(Model.WINDOW_WIDTH, Model.WINDOW_HEIGHT);
-		
-		frame.setResizable(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	Canvas can;
 
-		frame.setLocationRelativeTo(null);
-		
-		BorderLayout layout = new BorderLayout();
-		frame.setLayout(layout);
-		
-		JLayeredPane layer = frame.getLayeredPane();
-		layer.setSize(frame.getSize());
-		
-		String labels[] = {"Tools", "Colours"};
-		
-		View paint = new View(2, labels, new Point(0,0), viewtype.paint);
-		
-		//paint.setLayout(new BoxLayout(paint, BoxLayout.PAGE_AXIS));
-		paint.setBounds(0, 0, Model.WINDOW_WIDTH, Model.WINDOW_HEIGHT);
-		
-		//frame.getContentPane().add(paint,BorderLayout.CENTER);
-		layer.add(paint, JLayeredPane.FRAME_CONTENT_LAYER);
-		frame.setVisible(true);
+	public Main(String title) {
+
+		super(title);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(800, 600));
+		setLocationRelativeTo(null);
+
+		can = new Canvas();
+		add(can);
+
+		pack();
+		setVisible(true);
+
 	}
-	
-	public static void main(String args[]) {
-		affichage();
+
+	/* main *********************************************************************/
+
+	public static void main(String argv[]) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				@SuppressWarnings("unused")
+				Main main = new Main("paint");
+			}
+		});
 	}
-	
+
 }

@@ -1,15 +1,13 @@
 package src;
 
-import java.awt.Point;
-
-import javax.swing.JButton;
+import java.awt.Rectangle;
 
 @SuppressWarnings("serial")
-public class MenuItem extends JButton {
+public class MenuItem extends Rectangle {
 	
-	Point p;
+	String name;
 	
-	public MenuItem (String name) {
-		super(name);
+	public MenuItem (String s) {
+		this.name = s;
 	}
 }
