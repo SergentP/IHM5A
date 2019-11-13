@@ -32,8 +32,8 @@ public class Canvas extends JPanel {
 	View toolMenu = new View(3, tools, this, controller);
 	View colorMenu = new View(colors.length, colors, this, controller);
 
-	public Canvas() {
-		this.shapes = new Vector<ColoredShape>();
+	public Canvas(Vector<ColoredShape> shapes) {
+		this.shapes = shapes;
 		this.c = Color.BLACK;
 		setListener();
 	}
@@ -74,7 +74,6 @@ public class Canvas extends JPanel {
 		addMouseMotionListener(new MouseAdapter() {
 			
 			public void mouseMoved(MouseEvent me) {
-				repaint();
 			}
 
 			public void mouseDragged(MouseEvent me) {
@@ -97,15 +96,17 @@ public class Canvas extends JPanel {
 			g2.draw(shape.getShape());
 		}
 
-		switch (state) {
+		/*switch (state) {
 		case MenuOpened:
 			menu.paintComponent(g2);
 			break;
 		case ToolMenuOpened:
 			toolMenu.paintComponent(g2);
+		case ColorMenuOpened:
+			colorMenu.paintComponent(g2);
 		default:
 			break;
-		}
+		}*/
 	}
 
 }

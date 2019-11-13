@@ -1,8 +1,9 @@
 package src;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
-import src.MenuItem;
 
 public class View {
 	
@@ -38,10 +39,10 @@ public class View {
 	public void printmenu() {
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
-				items[i].setBounds(p.x - 50 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 100, 30);
+				items[i].setBounds(p.x - 40 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 80, 30);
 				items[i].addMouseListener(controller);
 			} else {
-				items[i].setBounds(p.x + 30, p.y + (i-7)*40, 100, 30);
+				items[i].setBounds(p.x + 30, p.y + (i-7)*40, 80, 30);
 			}
 			c.add(items[i]);
 		}
@@ -62,8 +63,6 @@ public class View {
 	}
 	
 	public void paintComponent(Graphics g) {
-		
-		
 		
 //		for (int i = 0; i < items.length; i++) {
 //			if (i < 8) {

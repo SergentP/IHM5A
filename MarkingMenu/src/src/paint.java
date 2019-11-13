@@ -161,7 +161,7 @@ class Paint extends JFrame {
 			}
 		}, BorderLayout.NORTH);
 
-		can = new Canvas();
+		can = new Canvas(shapes);
 		
 		add(can);
 

@@ -59,7 +59,6 @@ public class Controller implements MouseListener, MouseMotionListener{
 			}
 			break;
 		case ColorMenuOpened:
-			
 			System.out.println("color selected");
 			break;
 		case ToolMenuOpened:
@@ -68,6 +67,7 @@ public class Controller implements MouseListener, MouseMotionListener{
 		default:
 			break;
 		}
+		canvas.repaint();
 	}
 
 	public void mousePressed(MouseEvent e) {
