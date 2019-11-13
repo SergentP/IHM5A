@@ -25,9 +25,12 @@ public class Canvas extends JPanel {
 
 	String labels[] = { "Tools", "Colors" };
 	String tools[] = { "Pen", "Rect", "Ellipse" };
-	View menu = new View(2, labels);
-	View toolMenu = new View(3, tools);
-	Controller controller = new Controller(menu, toolMenu);
+	String colors[] = {"Black", "White", "Green", "Blue", "Red", "Yellow"};
+	Model model = new Model();
+	Controller controller = new Controller(this);
+	View menu = new View(2, labels, this, controller);
+	View toolMenu = new View(3, tools, this, controller);
+	View colorMenu = new View(colors.length, colors, this, controller);
 
 	public Canvas() {
 		this.shapes = new Vector<ColoredShape>();
@@ -43,6 +46,7 @@ public class Canvas extends JPanel {
 				if (e.getButton() == MouseEvent.BUTTON3 && state == MenuState.Idle) {
 					state = MenuState.MenuOpened;
 					menu.setPoint(e.getPoint());
+					menu.printmenu();
 				} else if (state != MenuState.Idle && toolMenu.items[0].contains(e.getPoint())){
 					state = MenuState.Idle;
 				}
@@ -70,7 +74,6 @@ public class Canvas extends JPanel {
 		addMouseMotionListener(new MouseAdapter() {
 			
 			public void mouseMoved(MouseEvent me) {
-				state = controller.move(state, me.getPoint());
 				repaint();
 			}
 

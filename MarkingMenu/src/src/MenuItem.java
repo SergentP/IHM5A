@@ -1,13 +1,19 @@
 package src;
 
-import java.awt.Rectangle;
+import java.awt.Color;
+
+import javax.swing.JButton;
 
 @SuppressWarnings("serial")
-public class MenuItem extends Rectangle {
+public class MenuItem extends JButton {
 	
-	String name;
+	Tool tool;
+	Color color;
 	
-	public MenuItem (String s) {
-		this.name = s;
+	public MenuItem (String s, Tool t, Color c) {
+		super(s);
+		this.setName(s);
+		tool = t;
+		color = c;
 	}
 }

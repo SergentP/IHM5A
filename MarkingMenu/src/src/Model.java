@@ -38,13 +38,6 @@ public class Model {
 		polar(pi*5/4,100)
 	};
 	
-	public Model(String l[]) {
-		labels = new String[l.length];
-		items = new MenuItem[l.length];
-		labels = l;
-		for (int i = 0; i < labels.length; i++) {
-			items[i] = new MenuItem(labels[i]);
-		}
-	}
+	public Model() {}
 	
 }

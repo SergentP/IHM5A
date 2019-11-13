@@ -57,46 +57,43 @@ public class MenuCirculaire extends JPanel {
 		public void mouseExited(MouseEvent e) {}
 	}
 	
-	public MenuCirculaire(int nb_b, String label[]) {
+	public MenuCirculaire(int nb_b, String label[], Canvas c) {
 		items = new MenuItem[nb_b];
 		for (int i = 0; i < nb_b; i++) {
 			items[i] = new MenuItem(label[i]);
 		}
-		setMinimumSize(new Dimension(800, 600));
-		this.setLayout(null);
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
 				items[i].setBounds(380 + coord_circ[i].x, 200 + coord_circ[i].y, 50, 30);
 			} else {
 				items[i].setBounds(380, 300 + (i-7)*40, 50, 30);
 			}
-			
 			items[i].addMouseListener(new ML());
-			this.add(items[i]);
+			c.add(items[i]);
 		}
 	}
 	
-	private static final int WINDOW_WIDTH = 1000;
-	private static final int WINDOW_HEIGHT = 650;
-
-	public static void main(String argv[]) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				
-				JFrame frame = new JFrame("menucirculaire");
-				frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-				frame.setResizable(true);
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-				frame.setLocationRelativeTo(null);
-				
-				String labels[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
-				JPanel menucirc = new MenuCirculaire(labels.length, labels);
-				frame.add(menucirc);
-				
-				frame.setVisible(true);
-			}
-		});
-	}
-	
+//	private static final int WINDOW_WIDTH = 1000;
+//	private static final int WINDOW_HEIGHT = 650;
+//
+//	public static void main(String argv[]) {
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				
+//				JFrame frame = new JFrame("menucirculaire");
+//				frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+//				frame.setResizable(true);
+//				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//				frame.setLocationRelativeTo(null);
+//				
+//				String labels[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"};
+//				JPanel menucirc = new MenuCirculaire(labels.length, labels);
+//				frame.add(menucirc);
+//				
+//				frame.setVisible(true);
+//			}
+//		});
+//	}
+//	
 }
