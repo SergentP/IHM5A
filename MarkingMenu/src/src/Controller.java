@@ -84,13 +84,19 @@ public class Controller implements MouseListener, MouseMotionListener{
 			}
 			break;
 		case ColorMenuOpened:
+			if (canvas.colorMenu.isPresent(button.getName())) {
+				canvas.clicked = false;
+				canvas.colorMenu.clearmenu();
+				canvas.state = MenuState.Idle;
+				System.out.println("color " + button.getName() + " selected");
+			}
 			break;
 		case ToolMenuOpened:
-			if (button.getName().toLowerCase().equals("pen")) {
+			if (canvas.toolMenu.isPresent(button.getName())) {
 				canvas.clicked = false;
 				canvas.toolMenu.clearmenu();
 				canvas.state = MenuState.Idle;
-				System.out.println("tool selected");
+				System.out.println("tool " + button.getName() + " selected");
 			}
 			break;
 		default:

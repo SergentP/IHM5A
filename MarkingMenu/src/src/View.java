@@ -45,10 +45,10 @@ public class View {
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
 				items[i].setBounds(p.x - 40 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 80, 20);
-				items[i].addMouseListener(controller);
 			} else {
 				items[i].setBounds(p.x - 40, p.y + (i-5)*50, 80, 20);
 			}
+			items[i].addMouseListener(controller);
 			if(!em) {
 				c.add(items[i]);
 			}
@@ -76,6 +76,15 @@ public class View {
 			}
 		}
 		return null;
+	}
+	
+	public boolean isPresent(String s) {
+		for(int i = 0; i < items.length; i++) {
+			if (items[i].getName().equals(s)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void paintComponent(Graphics g, boolean em) {

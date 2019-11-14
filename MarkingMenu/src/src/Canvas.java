@@ -26,7 +26,7 @@ public class Canvas extends JPanel {
 
 	String labels[] = { "Tools", "Colors" };
 	String tools[] = { "Pen", "Rect", "Ellipse" };
-	String colors[] = {"Black", "White", "Green", "Blue", "Red", "Yellow", "Pink", "Pink", "Pink"};
+	String colors[] = {"Black", "White", "Green", "Blue", "Red", "Yellow", "Pink", "Cyan", "Violet"};
 	Model model = new Model();
 	Controller controller = new Controller(this);
 	View menu = new View(2, labels, this, controller);
