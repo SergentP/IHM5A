@@ -1,15 +1,11 @@
 package src;
 
-import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.JButton;
-
 import src.Canvas.MenuState;
-
-//import src.Canvas.MenuState;
 
 public class Controller implements MouseListener, MouseMotionListener{
 
@@ -19,22 +15,53 @@ public class Controller implements MouseListener, MouseMotionListener{
 		canvas = c;
 	}
 	
-//	public MenuState move(MenuState state, Point p) {
-//		switch (state) {
-//		case MenuOpened:
-//			if(menu.items[0].contains(p)) {
-//				System.out.println("Tools menu opened");
-//				state = MenuState.ToolMenuOpened;
-//				toolMenu.setPoint(p);
-//				toolMenu.printmenu();
-//				return state;
-//			}
-//		default:
-//			break;
-//		}
-//		return state;
-//	}
+	public void handleMoved(MouseEvent me) {
+		switch (canvas.state) {
+		case MenuOpened:
+			if (canvas.menu.contain(me.getPoint()) != null) {
+				MenuItem mI = canvas.menu.contain(me.getPoint());
+				if (mI.getName().equals("Tools")) {
+					canvas.state = MenuState.ToolMenuOpened;
+					canvas.toolMenu.setPoint(me.getPoint());
+					canvas.menu.clearmenu();
+					canvas.toolMenu.printmenu();
+				}
+				else if (mI.getName().equals("Colors")) {
+					canvas.state = MenuState.ColorMenuOpened;
+					canvas.colorMenu.setPoint(me.getPoint());
+					canvas.menu.clearmenu();
+					canvas.colorMenu.printmenu();
+				}
+			}
+			break;
+		case ColorMenuOpened:
+			if (canvas.colorMenu.contain(me.getPoint()) != null) {
+				MenuItem mI = canvas.colorMenu.contain(me.getPoint());
+				canvas.clicked = false;
+				canvas.colorMenu.clearmenu();
+				canvas.state = MenuState.Idle;
+				System.out.println("color " + mI.getName() + " selected");
+			}
+			break;
+		case ToolMenuOpened:
+			if (canvas.toolMenu.contain(me.getPoint()) != null) {
+				MenuItem mI = canvas.toolMenu.contain(me.getPoint());
+				canvas.clicked = false;
+				canvas.toolMenu.clearmenu();
+				canvas.state = MenuState.Idle;
+				System.out.println("tool " + mI.getName() + " selected");
+			}
+			break;
+		default:
+			break;
+		}
+		canvas.repaint();
+	}
 
+	public void handleDragged(MouseEvent e) {
+		
+	}
+	
 	public void mouseDragged(MouseEvent e) {
 	}
 
@@ -42,7 +69,6 @@ public class Controller implements MouseListener, MouseMotionListener{
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		Point p = e.getPoint();
 		MenuItem button = (MenuItem) e.getSource();
 		switch (canvas.state) {
 		case MenuOpened:
@@ -59,10 +85,14 @@ public class Controller implements MouseListener, MouseMotionListener{
 			}
 			break;
 		case ColorMenuOpened:
-			System.out.println("color selected");
 			break;
 		case ToolMenuOpened:
-			System.out.println("tool selected");
+			if (button.getName().toLowerCase().equals("pen")) {
+				canvas.clicked = false;
+				canvas.toolMenu.clearmenu();
+				canvas.state = MenuState.Idle;
+				System.out.println("tool selected");
+			}
 			break;
 		default:
 			break;

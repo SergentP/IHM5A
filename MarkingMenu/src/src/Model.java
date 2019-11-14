@@ -28,14 +28,14 @@ public class Model {
 	}
 	
 	static Point coord_circ[] = {
-		polar(pi,100), 
-		polar(0,100), 
-		polar(pi*3/2,100), 
-		polar(pi*1/2,100),
-		polar(pi*3/4,100), 
-		polar(pi*1/4,100), 
-		polar(pi*7/4,100),  
-		polar(pi*5/4,100)
+		polar(pi,150), 
+		polar(0,150), 
+		polar(pi*3/2,150), 
+		polar(pi*1/2,150),
+		polar(pi*3/4,150), 
+		polar(pi*1/4,150), 
+		polar(pi*7/4,150),  
+		polar(pi*5/4,150)
 	};
 	
 	public Model() {}

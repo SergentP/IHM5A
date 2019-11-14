@@ -23,8 +23,6 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 
-import src.Paint.Tool;
-
 @SuppressWarnings("serial")
 class Main extends JFrame {
 

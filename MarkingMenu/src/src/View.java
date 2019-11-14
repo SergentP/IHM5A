@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 public class View {
 	
@@ -13,6 +14,7 @@ public class View {
 	int nb_b;
 	MenuItem[] items;
 	String[] labels;
+	Rectangle[] item_zones;
 	Point p;
 	Canvas c;
 	
@@ -33,7 +35,9 @@ public class View {
 		items = new MenuItem[nb_b];
 		for (int i = 0; i < nb_b; i++) {
 			items[i] = new MenuItem(labels[i], null, null);
-		}	
+		}
+		
+		item_zones = new Rectangle[nb_b];
 	}
 	
 	public void printmenu() {
@@ -42,7 +46,7 @@ public class View {
 				items[i].setBounds(p.x - 40 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 80, 30);
 				items[i].addMouseListener(controller);
 			} else {
-				items[i].setBounds(p.x + 30, p.y + (i-7)*40, 80, 30);
+				items[i].setBounds(p.x - 40, p.y + (i-5)*65, 80, 30);
 			}
 			c.add(items[i]);
 		}
@@ -62,23 +66,32 @@ public class View {
 		return this.p;
 	}
 	
+	public MenuItem contain(Point p) {
+		for(int i = 0; i< items.length; i++) {
+			if(items[i].getRectangle().contains(p)) {
+				return items[i];
+			}
+		}
+		return null;
+	}
+	
 	public void paintComponent(Graphics g) {
 		
-//		for (int i = 0; i < items.length; i++) {
-//			if (i < 8) {
-//				items[i] = new Rectangle((p.x - 25) + Model.coord_circ[i].x, (p.y - 15) + Model.coord_circ[i].y, 50, 30);
-//			} else {
-//				items[i] = new Rectangle(p.x, p.y + (i-5)*50, 50, 30);
-//			}
-//		}
-//		
-//		for (int i = 0; i < items.length; i++) {
-//			g2.setColor(Color.LIGHT_GRAY);
-//			g2.fill(items[i]);
-//			g2.setColor(Color.BLACK);
-//			g2.draw(items[i]);
-//			g2.drawString(labels[i], (int) (items[i].getCenterX() - 16), (int) items[i].getCenterY() + 4);
-//		}
+		Graphics2D g2 = (Graphics2D) g;
+		
+		for (int i = 0; i < items.length; i++) {
+			if (i < 8) {
+				item_zones[i] = new Rectangle(p.x - 45 + Model.coord_circ[i].x, p.y - 20 + Model.coord_circ[i].y, 90, 40);
+			} else {
+				item_zones[i] = new Rectangle(p.x - 45, p.y + (i-5)*65 - 5, 90, 40);
+			}
+			items[i].setRectangle(item_zones[i]);
+		}
+		
+		for (int i = 0; i < items.length; i++) {
+			g2.setColor(Color.LIGHT_GRAY);
+			g2.fill(item_zones[i]);
+		}
 	}
 	
 }
