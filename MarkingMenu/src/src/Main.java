@@ -28,6 +28,7 @@ class Main extends JFrame {
 
 	Vector<ColoredShape> shapes = new Vector<ColoredShape>();
 	Color c = Color.BLACK;
+	Boolean expert_mode = false;
 	Canvas can;
 
 	class Tool extends AbstractAction implements MouseInputListener {
@@ -117,8 +118,11 @@ class Main extends JFrame {
 		setMinimumSize(new Dimension(800, 600));
 		setLocationRelativeTo(null);
 
+		can = new Canvas(shapes);
+		
 		final JButton red = new JButton();
 		red.setBackground(Color.RED);
+		red.setPreferredSize(new Dimension(20,20));
 		red.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				c = Color.RED;
@@ -132,6 +136,28 @@ class Main extends JFrame {
 				c = Color.BLACK;
 			}
 		});
+		
+		final JButton expert = new JButton("Mode Expert");
+		expert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!can.getClicked()) {
+					expert_mode = !expert_mode; 
+					can.setModeExpert(expert_mode);
+					if(expert_mode) {
+						expert.setBackground(Color.GREEN);
+					} else {
+						expert.setBackground(Color.WHITE);
+					}
+				}
+			}
+		});
+		
+		add(new JToolBar() {
+			{
+				add(expert);
+
+			}
+		}, BorderLayout.WEST);
 
 		add(new JToolBar() {
 			{
@@ -149,7 +175,6 @@ class Main extends JFrame {
 			}
 		}, BorderLayout.NORTH);
 		
-		can = new Canvas(shapes);
 		add(can);
 
 		pack();

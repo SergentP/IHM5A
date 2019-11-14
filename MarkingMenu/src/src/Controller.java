@@ -1,6 +1,5 @@
 package src;
 
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -24,13 +23,13 @@ public class Controller implements MouseListener, MouseMotionListener{
 					canvas.state = MenuState.ToolMenuOpened;
 					canvas.toolMenu.setPoint(me.getPoint());
 					canvas.menu.clearmenu();
-					canvas.toolMenu.printmenu();
+					canvas.toolMenu.printmenu(canvas.expert_mode);
 				}
 				else if (mI.getName().equals("Colors")) {
 					canvas.state = MenuState.ColorMenuOpened;
 					canvas.colorMenu.setPoint(me.getPoint());
 					canvas.menu.clearmenu();
-					canvas.colorMenu.printmenu();
+					canvas.colorMenu.printmenu(canvas.expert_mode);
 				}
 			}
 			break;
@@ -76,12 +75,12 @@ public class Controller implements MouseListener, MouseMotionListener{
 				canvas.state = MenuState.ToolMenuOpened;
 				canvas.toolMenu.setPoint(button.getLocation());
 				canvas.menu.clearmenu();
-				canvas.toolMenu.printmenu();
+				canvas.toolMenu.printmenu(canvas.expert_mode);
 			} else if (button.getName().equals("Colors")) {
 				canvas.state = MenuState.ColorMenuOpened;
 				canvas.colorMenu.setPoint(button.getLocation());
 				canvas.menu.clearmenu();
-				canvas.colorMenu.printmenu();
+				canvas.colorMenu.printmenu(canvas.expert_mode);
 			}
 			break;
 		case ColorMenuOpened:

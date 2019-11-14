@@ -16,6 +16,7 @@ public class Canvas extends JPanel {
 	Vector<ColoredShape> shapes;
 	Color c;
 	boolean clicked;
+	boolean expert_mode;
 
 	public enum MenuState {
 		Idle, MenuOpened, ColorMenuOpened, ToolMenuOpened
@@ -38,6 +39,14 @@ public class Canvas extends JPanel {
 		this.clicked = false;
 		setListener();
 	}
+	
+	public void setModeExpert(boolean em) {
+		this.expert_mode = em;
+	}
+	
+	public boolean getClicked() {
+		return this.clicked;
+	}
 
 	private void setListener() {
 
@@ -48,7 +57,7 @@ public class Canvas extends JPanel {
 				if (e.getButton() == MouseEvent.BUTTON3 && state == MenuState.Idle) {
 					state = MenuState.MenuOpened;
 					menu.setPoint(e.getPoint());
-					menu.printmenu();
+					menu.printmenu(expert_mode);
 				}
 				repaint();
 			}
@@ -78,8 +87,10 @@ public class Canvas extends JPanel {
 		addMouseMotionListener(new MouseAdapter() {
 			
 			public void mouseMoved(MouseEvent me) {
-				//System.out.println("Here (" + me.getPoint().x + "," + me.getPoint().y + ")");
-				controller.handleMoved(me);
+				if(expert_mode) {
+					//System.out.println("Here (" + me.getPoint().x + "," + me.getPoint().y + ")");
+					controller.handleMoved(me);
+				}
 			}
 
 			public void mouseDragged(MouseEvent me) {
@@ -104,13 +115,13 @@ public class Canvas extends JPanel {
 
 		switch (state) {
 		case MenuOpened:
-			menu.paintComponent(g2);
+			menu.paintComponent(g2, expert_mode);
 			break;
 		case ToolMenuOpened:
-			toolMenu.paintComponent(g2);
+			toolMenu.paintComponent(g2, expert_mode);
 			break;
 		case ColorMenuOpened:
-			colorMenu.paintComponent(g2);
+			colorMenu.paintComponent(g2, expert_mode);
 			break;
 		default:
 			break;

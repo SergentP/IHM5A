@@ -1,5 +1,6 @@
 package src;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -40,15 +41,17 @@ public class View {
 		item_zones = new Rectangle[nb_b];
 	}
 	
-	public void printmenu() {
+	public void printmenu(boolean em) {
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
-				items[i].setBounds(p.x - 40 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 80, 30);
+				items[i].setBounds(p.x - 40 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 80, 20);
 				items[i].addMouseListener(controller);
 			} else {
-				items[i].setBounds(p.x - 40, p.y + (i-5)*65, 80, 30);
+				items[i].setBounds(p.x - 40, p.y + (i-5)*50, 80, 20);
 			}
-			c.add(items[i]);
+			if(!em) {
+				c.add(items[i]);
+			}
 		}
 	}
 	
@@ -75,21 +78,27 @@ public class View {
 		return null;
 	}
 	
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g, boolean em) {
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
-				item_zones[i] = new Rectangle(p.x - 45 + Model.coord_circ[i].x, p.y - 20 + Model.coord_circ[i].y, 90, 40);
+				item_zones[i] = new Rectangle(p.x - 45 + Model.coord_circ[i].x, p.y - 20 + Model.coord_circ[i].y, 90, 30);
 			} else {
-				item_zones[i] = new Rectangle(p.x - 45, p.y + (i-5)*65 - 5, 90, 40);
+				item_zones[i] = new Rectangle(p.x - 45, p.y + (i-5)*50 - 5, 90, 30);
 			}
 			items[i].setRectangle(item_zones[i]);
 		}
 		
 		for (int i = 0; i < items.length; i++) {
-			g2.setColor(Color.LIGHT_GRAY);
+			if (em) {
+				AlphaComposite acomp = AlphaComposite.getInstance(
+		                AlphaComposite.SRC_OVER, 0.01f);
+		        g2.setComposite(acomp);
+			} else {
+				g2.setColor(Color.LIGHT_GRAY);
+			}
 			g2.fill(item_zones[i]);
 		}
 	}
