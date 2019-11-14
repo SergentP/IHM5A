@@ -1,37 +1,25 @@
 package src;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.min;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Path2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
-import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
-import javax.swing.event.MouseInputListener;
 
 @SuppressWarnings("serial")
 class Main extends JFrame {
 
 	Vector<ColoredShape> shapes = new Vector<ColoredShape>();
-	Color c = Color.BLACK;
 	Boolean expert_mode = false;
 	Canvas can;
 
-	class Tool extends AbstractAction implements MouseInputListener {
+	/*class Tool extends AbstractAction implements MouseInputListener {
 		Point o;
 		Shape shape;
 
@@ -78,7 +66,7 @@ class Main extends JFrame {
 			if (path == null) {
 				path = new Path2D.Double();
 				path.moveTo(o.getX(), o.getY());
-				ColoredShape cs = new ColoredShape((shape = path), c);
+				ColoredShape cs = new ColoredShape((shape = path), can.getColor());
 				shapes.add(cs);
 			}
 			path.lineTo(e.getX(), e.getY());
@@ -89,7 +77,7 @@ class Main extends JFrame {
 			Rectangle2D.Double rect = (Rectangle2D.Double) shape;
 			if (rect == null) {
 				rect = new Rectangle2D.Double(o.getX(), o.getY(), 0, 0);
-				ColoredShape cs = new ColoredShape((shape = rect), c);
+				ColoredShape cs = new ColoredShape((shape = rect), can.getColor());
 				shapes.add(cs);
 			}
 			rect.setRect(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
@@ -101,7 +89,7 @@ class Main extends JFrame {
 			Ellipse2D.Double ell = (Ellipse2D.Double) shape;
 			if (ell == null) {
 				ell = new Ellipse2D.Double(o.getX(), o.getY(), 0, 0);
-				ColoredShape cs = new ColoredShape((shape = ell), c);
+				ColoredShape cs = new ColoredShape((shape = ell), can.getColor());
 				shapes.add(cs);
 			}
 			ell.setFrame(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
@@ -109,7 +97,7 @@ class Main extends JFrame {
 			can.repaint();
 		}
 	} };
-	Tool tool;
+	Tool tool;*/
 	
 	public Main(String title) {
 
@@ -125,7 +113,8 @@ class Main extends JFrame {
 		red.setPreferredSize(new Dimension(20,20));
 		red.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				c = Color.RED;
+				can.setColor(Color.RED);
+				System.out.println("color Red selected");
 			}
 		});
 
@@ -133,7 +122,8 @@ class Main extends JFrame {
 		black.setBackground(Color.BLACK);
 		black.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				c = Color.BLACK;
+				can.setColor(Color.BLACK);
+				System.out.println("color Black selected");
 			}
 		});
 		
@@ -167,13 +157,13 @@ class Main extends JFrame {
 			}
 		}, BorderLayout.SOUTH);
 
-		add(new JToolBar() {
+		/*add(new JToolBar() {
 			{
 				for (AbstractAction tool : tools) {
 					add(tool);
 				}
 			}
-		}, BorderLayout.NORTH);
+		}, BorderLayout.NORTH);*/
 		
 		add(can);
 

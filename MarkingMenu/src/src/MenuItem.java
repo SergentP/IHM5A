@@ -12,11 +12,10 @@ public class MenuItem extends JButton {
 	Color color;
 	Rectangle rect;
 	
-	public MenuItem (String s, Tool t, Color c) {
+	public MenuItem (String s, Tool t) {
 		super(s);
 		this.setName(s);
-		tool = t;
-		color = c;
+		this.tool = t;
 	}
 	
 	public void setRectangle(Rectangle r) {

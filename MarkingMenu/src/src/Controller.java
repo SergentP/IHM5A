@@ -22,14 +22,10 @@ public class Controller implements MouseListener, MouseMotionListener{
 				if (mI.getName().equals("Tools")) {
 					canvas.state = MenuState.ToolMenuOpened;
 					canvas.toolMenu.setPoint(me.getPoint());
-					canvas.menu.clearmenu();
-					canvas.toolMenu.printmenu(canvas.expert_mode);
 				}
 				else if (mI.getName().equals("Colors")) {
 					canvas.state = MenuState.ColorMenuOpened;
 					canvas.colorMenu.setPoint(me.getPoint());
-					canvas.menu.clearmenu();
-					canvas.colorMenu.printmenu(canvas.expert_mode);
 				}
 			}
 			break;
@@ -37,7 +33,7 @@ public class Controller implements MouseListener, MouseMotionListener{
 			if (canvas.colorMenu.contain(me.getPoint()) != null) {
 				MenuItem mI = canvas.colorMenu.contain(me.getPoint());
 				canvas.clicked = false;
-				canvas.colorMenu.clearmenu();
+				mI.tool.execute();
 				canvas.state = MenuState.Idle;
 				System.out.println("color " + mI.getName() + " selected");
 			}
@@ -46,9 +42,8 @@ public class Controller implements MouseListener, MouseMotionListener{
 			if (canvas.toolMenu.contain(me.getPoint()) != null) {
 				MenuItem mI = canvas.toolMenu.contain(me.getPoint());
 				canvas.clicked = false;
-				canvas.toolMenu.clearmenu();
+				mI.tool.execute();
 				canvas.state = MenuState.Idle;
-				System.out.println("tool " + mI.getName() + " selected");
 			}
 			break;
 		default:
@@ -75,17 +70,18 @@ public class Controller implements MouseListener, MouseMotionListener{
 				canvas.state = MenuState.ToolMenuOpened;
 				canvas.toolMenu.setPoint(button.getLocation());
 				canvas.menu.clearmenu();
-				canvas.toolMenu.printmenu(canvas.expert_mode);
+				canvas.toolMenu.printmenu();
 			} else if (button.getName().equals("Colors")) {
 				canvas.state = MenuState.ColorMenuOpened;
 				canvas.colorMenu.setPoint(button.getLocation());
 				canvas.menu.clearmenu();
-				canvas.colorMenu.printmenu(canvas.expert_mode);
+				canvas.colorMenu.printmenu();
 			}
 			break;
 		case ColorMenuOpened:
 			if (canvas.colorMenu.isPresent(button.getName())) {
 				canvas.clicked = false;
+				button.tool.execute();
 				canvas.colorMenu.clearmenu();
 				canvas.state = MenuState.Idle;
 				System.out.println("color " + button.getName() + " selected");
@@ -94,9 +90,9 @@ public class Controller implements MouseListener, MouseMotionListener{
 		case ToolMenuOpened:
 			if (canvas.toolMenu.isPresent(button.getName())) {
 				canvas.clicked = false;
+				button.tool.execute();
 				canvas.toolMenu.clearmenu();
 				canvas.state = MenuState.Idle;
-				System.out.println("tool " + button.getName() + " selected");
 			}
 			break;
 		default:

@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class View {
 	
@@ -17,14 +19,17 @@ public class View {
 	String[] labels;
 	Rectangle[] item_zones;
 	Point p;
-	Canvas c;
+	Canvas can;
+	String type;
 	
-	public View (int nb_b, String label[], Canvas ca, Controller control) {
+	public View (int nb_b, String label[], String type, Canvas c, Controller control) {
 		
-		model = new Model();
+		this.can = c;
+		model = new Model(can);
 		controller = control;
 		
 		p = new Point();
+		this.type = type;
 //		
 //		items = new Rectangle[nb_b];
 		labels = new String[nb_b];
@@ -32,16 +37,22 @@ public class View {
 		for (int i = 0; i < label.length; i++) {
 			labels[i] = new String(label[i]);
 		}
-		c = ca;	
+
 		items = new MenuItem[nb_b];
 		for (int i = 0; i < nb_b; i++) {
-			items[i] = new MenuItem(labels[i], null, null);
+			if (type.equals("basic")) {
+				items[i] = new MenuItem(labels[i], null);
+			} else if (type.equals("color")) {
+				items[i] = new MenuItem(labels[i], model.colortools[i]);
+			} else if (type.equals("tool")) {
+				items[i] = new MenuItem(labels[i], model.shapetools[i]);
+			}
 		}
 		
 		item_zones = new Rectangle[nb_b];
 	}
 	
-	public void printmenu(boolean em) {
+	public void printmenu() {
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
 				items[i].setBounds(p.x - 40 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 80, 20);
@@ -49,15 +60,13 @@ public class View {
 				items[i].setBounds(p.x - 40, p.y + (i-5)*50, 80, 20);
 			}
 			items[i].addMouseListener(controller);
-			if(!em) {
-				c.add(items[i]);
-			}
+			can.add(items[i]);
 		}
 	}
 	
 	public void clearmenu() {
 		for (int i = 0; i < items.length; i++) {
-			c.remove(items[i]);
+			can.remove(items[i]);
 		}
 	}
 	
@@ -89,27 +98,27 @@ public class View {
 	
 	public void paintComponent(Graphics g, boolean em) {
 		
-		Graphics2D g2 = (Graphics2D) g;
-		
-		for (int i = 0; i < items.length; i++) {
-			if (i < 8) {
-				item_zones[i] = new Rectangle(p.x - 45 + Model.coord_circ[i].x, p.y - 20 + Model.coord_circ[i].y, 90, 30);
-			} else {
-				item_zones[i] = new Rectangle(p.x - 45, p.y + (i-5)*50 - 5, 90, 30);
+		if(em) {
+			
+			Graphics2D g2 = (Graphics2D) g;
+			
+			for (int i = 0; i < items.length; i++) {
+				if (i < 8) {
+					item_zones[i] = new Rectangle(p.x - 45 + Model.coord_circ[i].x, p.y - 20 + Model.coord_circ[i].y, 90, 30);
+				} else {
+					item_zones[i] = new Rectangle(p.x - 45, p.y + (i-5)*50 - 5, 90, 30);
+				}
+				items[i].setRectangle(item_zones[i]);
 			}
-			items[i].setRectangle(item_zones[i]);
-		}
-		
-		for (int i = 0; i < items.length; i++) {
-			if (em) {
-				AlphaComposite acomp = AlphaComposite.getInstance(
-		                AlphaComposite.SRC_OVER, 0.01f);
+			
+			for (int i = 0; i < items.length; i++) {
+				AlphaComposite acomp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);
 		        g2.setComposite(acomp);
-			} else {
-				g2.setColor(Color.LIGHT_GRAY);
+				g2.fill(item_zones[i]);
 			}
-			g2.fill(item_zones[i]);
+			
 		}
+		
 	}
 	
 }

@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class Canvas extends JPanel {
 
 	Vector<ColoredShape> shapes;
-	Color c;
+	Color c = Color.BLACK;
 	boolean clicked;
 	boolean expert_mode;
 
@@ -26,12 +26,11 @@ public class Canvas extends JPanel {
 
 	String labels[] = { "Tools", "Colors" };
 	String tools[] = { "Pen", "Rect", "Ellipse" };
-	String colors[] = {"Black", "White", "Green", "Blue", "Red", "Yellow", "Pink", "Cyan", "Violet"};
-	Model model = new Model();
+	String colors[] = {"Red", "Blue", "Green"};
 	Controller controller = new Controller(this);
-	View menu = new View(2, labels, this, controller);
-	View toolMenu = new View(3, tools, this, controller);
-	View colorMenu = new View(colors.length, colors, this, controller);
+	View menu = new View(labels.length, labels, "basic", this, controller);
+	View toolMenu = new View(tools.length, tools, "tool", this, controller);
+	View colorMenu = new View(colors.length, colors, "color", this, controller);
 
 	public Canvas(Vector<ColoredShape> shapes) {
 		this.shapes = shapes;
@@ -47,6 +46,18 @@ public class Canvas extends JPanel {
 	public boolean getClicked() {
 		return this.clicked;
 	}
+	
+	public Color getColor() {
+		return c;
+	}
+	
+	public void setColor(Color c) {
+		this.c = c;
+	}
+	
+	public Vector<ColoredShape> getShapes() {
+		return shapes;
+	}
 
 	private void setListener() {
 
@@ -57,7 +68,9 @@ public class Canvas extends JPanel {
 				if (e.getButton() == MouseEvent.BUTTON3 && state == MenuState.Idle) {
 					state = MenuState.MenuOpened;
 					menu.setPoint(e.getPoint());
-					menu.printmenu(expert_mode);
+					if(!expert_mode) {
+						menu.printmenu();
+					}
 				}
 				repaint();
 			}
