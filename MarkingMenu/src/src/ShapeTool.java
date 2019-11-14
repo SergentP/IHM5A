@@ -29,15 +29,11 @@ public class ShapeTool extends Tool implements MouseInputListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON1) {
-			o = e.getPoint();
-		}
+		o = e.getPoint();
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON1) {
-			shape = null;
-		}
+		shape = null;
 	}
 
 	public void mouseDragged(MouseEvent e) {

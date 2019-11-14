@@ -21,10 +21,12 @@ public class Controller implements MouseListener, MouseMotionListener{
 				MenuItem mI = canvas.menu.contain(me.getPoint());
 				if (mI.getName().equals("Tools")) {
 					canvas.state = MenuState.ToolMenuOpened;
+					canvas.toolMenu.setOldPoint(canvas.menu.getOldPoint());
 					canvas.toolMenu.setPoint(me.getPoint());
 				}
 				else if (mI.getName().equals("Colors")) {
 					canvas.state = MenuState.ColorMenuOpened;
+					canvas.colorMenu.setOldPoint(canvas.menu.getOldPoint());
 					canvas.colorMenu.setPoint(me.getPoint());
 				}
 			}

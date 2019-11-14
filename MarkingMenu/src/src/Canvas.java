@@ -3,6 +3,7 @@ package src;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,6 +18,7 @@ public class Canvas extends JPanel {
 	Color c = Color.BLACK;
 	boolean clicked;
 	boolean expert_mode;
+	Point actual_point;
 
 	public enum MenuState {
 		Idle, MenuOpened, ColorMenuOpened, ToolMenuOpened
@@ -26,13 +28,14 @@ public class Canvas extends JPanel {
 
 	String labels[] = { "Tools", "Colors" };
 	String tools[] = { "Pen", "Rect", "Ellipse" };
-	String colors[] = {"Red", "Blue", "Green"};
+	String colors[] = {"Black", "Red", "Blue", "Green"};
 	Controller controller = new Controller(this);
 	View menu = new View(labels.length, labels, "basic", this, controller);
 	View toolMenu = new View(tools.length, tools, "tool", this, controller);
 	View colorMenu = new View(colors.length, colors, "color", this, controller);
 
 	public Canvas(Vector<ColoredShape> shapes) {
+		actual_point = new Point();
 		this.shapes = shapes;
 		this.c = Color.BLACK;
 		this.clicked = false;
@@ -58,15 +61,24 @@ public class Canvas extends JPanel {
 	public Vector<ColoredShape> getShapes() {
 		return shapes;
 	}
+	
+	public Point getPoint() {
+		return actual_point;
+	}
+	
+	public void setPoint(Point p) {
+		this.actual_point = p;
+	}
 
 	private void setListener() {
 
 		addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent e) {
-				clicked = true;
 				if (e.getButton() == MouseEvent.BUTTON3 && state == MenuState.Idle) {
+					clicked = true;
 					state = MenuState.MenuOpened;
+					menu.setOldPoint(e.getPoint());
 					menu.setPoint(e.getPoint());
 					if(!expert_mode) {
 						menu.printmenu();
@@ -76,20 +88,9 @@ public class Canvas extends JPanel {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				/*if (e.getButton() == MouseEvent.BUTTON3 && state == MenuState.Idle && !clicked) {
-					state = MenuState.MenuOpened;
-					menu.setPoint(e.getPoint());
-					menu.printmenu();
-				}
-				repaint();*/
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				/*if (e.getButton() == MouseEvent.BUTTON3 && state != MenuState.Idle && !clicked) {
-					state = MenuState.Idle;
-					menu.clearmenu();
-				}
-				repaint();*/
 			}
 
 			public void mouseDragged(MouseEvent e) {
@@ -100,10 +101,11 @@ public class Canvas extends JPanel {
 		addMouseMotionListener(new MouseAdapter() {
 			
 			public void mouseMoved(MouseEvent me) {
+				setPoint(me.getPoint());
 				if(expert_mode) {
-					//System.out.println("Here (" + me.getPoint().x + "," + me.getPoint().y + ")");
 					controller.handleMoved(me);
 				}
+				repaint();
 			}
 
 			public void mouseDragged(MouseEvent me) {

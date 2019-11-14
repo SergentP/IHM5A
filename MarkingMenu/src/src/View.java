@@ -6,8 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class View {
 	
@@ -19,6 +17,7 @@ public class View {
 	String[] labels;
 	Rectangle[] item_zones;
 	Point p;
+	Point old_p;
 	Canvas can;
 	String type;
 	
@@ -29,6 +28,7 @@ public class View {
 		controller = control;
 		
 		p = new Point();
+		old_p = new Point();
 		this.type = type;
 //		
 //		items = new Rectangle[nb_b];
@@ -74,6 +74,14 @@ public class View {
 		this.p = p;
 	}
 	
+	public void setOldPoint(Point p) {
+		this.old_p = p;
+	}
+	
+	public Point getOldPoint() {
+		return this.old_p;
+	}
+	
 	public Point getPoint() {
 		return this.p;
 	}
@@ -98,9 +106,14 @@ public class View {
 	
 	public void paintComponent(Graphics g, boolean em) {
 		
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.setColor(Color.BLACK);
+		g2.drawLine(p.x, p.y, can.getPoint().x, can.getPoint().y);
+		
 		if(em) {
 			
-			Graphics2D g2 = (Graphics2D) g;
+			g2.drawLine(p.x, p.y, old_p.x, old_p.y);
 			
 			for (int i = 0; i < items.length; i++) {
 				if (i < 8) {
@@ -112,7 +125,7 @@ public class View {
 			}
 			
 			for (int i = 0; i < items.length; i++) {
-				AlphaComposite acomp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f);
+				AlphaComposite acomp = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0);
 		        g2.setComposite(acomp);
 				g2.fill(item_zones[i]);
 			}

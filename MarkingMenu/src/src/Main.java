@@ -147,7 +147,7 @@ class Main extends JFrame {
 				add(expert);
 
 			}
-		}, BorderLayout.WEST);
+		}, BorderLayout.NORTH);
 
 		add(new JToolBar() {
 			{

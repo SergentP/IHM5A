@@ -46,7 +46,7 @@ public class Model {
 	}
 	
 	private ColorTool[] createColorTools() {
-		ColorTool colorTools[] = { new ColorTool("red", Color.RED, can), new ColorTool("blue", Color.BLUE, can),
+		ColorTool colorTools[] = { new ColorTool("black", Color.BLACK, can), new ColorTool("red", Color.RED, can), new ColorTool("blue", Color.BLUE, can),
 				new ColorTool("green", Color.GREEN, can) };
 		return colorTools;
 	}
@@ -54,39 +54,45 @@ public class Model {
 	private ShapeTool[] createShapeTools() {
 		ShapeTool tools[] = { new ShapeTool("pen", can) {
 			public void mouseDragged(MouseEvent e) {
-				Path2D.Double path = (Path2D.Double) shape;
-				if (path == null) {
-					path = new Path2D.Double();
-					path.moveTo(o.getX(), o.getY());
-					ColoredShape cs = new ColoredShape((shape = path), can.getColor());
-					can.getShapes().add(cs);
+				if(!can.clicked) {
+					Path2D.Double path = (Path2D.Double) shape;
+					if (path == null) {
+						path = new Path2D.Double();
+						path.moveTo(o.getX(), o.getY());
+						ColoredShape cs = new ColoredShape((shape = path), can.getColor());
+						can.getShapes().add(cs);
+					}
+					path.lineTo(e.getX(), e.getY());
+					can.repaint();
 				}
-				path.lineTo(e.getX(), e.getY());
-				can.repaint();
 			}
 		}, new ShapeTool("rect", can) {
 			public void mouseDragged(MouseEvent e) {
-				Rectangle2D.Double rect = (Rectangle2D.Double) shape;
-				if (rect == null) {
-					rect = new Rectangle2D.Double(o.getX(), o.getY(), 0, 0);
-					ColoredShape cs = new ColoredShape((shape = rect), can.getColor());
-					can.getShapes().add(cs);
+				if(!can.clicked) {
+					Rectangle2D.Double rect = (Rectangle2D.Double) shape;
+					if (rect == null) {
+						rect = new Rectangle2D.Double(o.getX(), o.getY(), 0, 0);
+						ColoredShape cs = new ColoredShape((shape = rect), can.getColor());
+						can.getShapes().add(cs);
+					}
+					rect.setRect(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
+							abs(e.getY() - o.getY()));
+					can.repaint();
 				}
-				rect.setRect(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
-						abs(e.getY() - o.getY()));
-				can.repaint();
 			}
 		}, new ShapeTool("ellipse", can) {
 			public void mouseDragged(MouseEvent e) {
-				Ellipse2D.Double ell = (Ellipse2D.Double) shape;
-				if (ell == null) {
-					ell = new Ellipse2D.Double(o.getX(), o.getY(), 0, 0);
-					ColoredShape cs = new ColoredShape((shape = ell), can.getColor());
-					can.getShapes().add(cs);
+				if(!can.clicked) {
+					Ellipse2D.Double ell = (Ellipse2D.Double) shape;
+					if (ell == null) {
+						ell = new Ellipse2D.Double(o.getX(), o.getY(), 0, 0);
+						ColoredShape cs = new ColoredShape((shape = ell), can.getColor());
+						can.getShapes().add(cs);
+					}
+					ell.setFrame(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
+							abs(e.getY() - o.getY()));
+					can.repaint();
 				}
-				ell.setFrame(min(e.getX(), o.getX()), min(e.getY(), o.getY()), abs(e.getX() - o.getX()),
-						abs(e.getY() - o.getY()));
-				can.repaint();
 			}
 		} };
 		return tools;
