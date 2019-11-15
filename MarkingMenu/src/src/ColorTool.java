@@ -10,8 +10,7 @@ public class ColorTool extends Tool {
 	public ColorTool(String name, Color c, Canvas can) {
 		super(name);
 		this.color = c;
-		this.can = can;
-		
+		this.can = can;	
 	}
 
 	@Override

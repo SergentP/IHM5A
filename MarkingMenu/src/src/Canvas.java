@@ -27,13 +27,10 @@ public class Canvas extends JPanel {
 
 	MenuState state = MenuState.Idle;
 
-	String labels[] = { "Tools", "Colors" };
-	String tools[] = { "Pen", "Rect", "Ellipse", "Eraser" };
-	String colors[] = {"Black", "Red", "Blue", "Green"};
 	Controller controller = new Controller(this);
-	View menu = new View(labels.length, labels, "basic", this, controller);
-	View toolMenu = new View(tools.length, tools, "tool", this, controller);
-	View colorMenu = new View(colors.length, colors, "color", this, controller);
+	View menu = new View("basic", this, controller);
+	View toolMenu = new View("tool", this, controller);
+	View colorMenu = new View("color", this, controller);
 
 	public Canvas(Vector<ColoredShape> shapes) {
 		actual_point = new Point();

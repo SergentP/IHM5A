@@ -14,7 +14,7 @@ public class Model {
 	
 	Canvas can;
 	MenuItem items[];
-	String labels[];
+	String[] labels;
 	ColorTool[] colortools;
 	ShapeTool[] shapetools;
 	
@@ -40,19 +40,25 @@ public class Model {
 	
 	public Model(Canvas can) {
 		this.can = can;
+		labels = createLabels();
 		colortools = createColorTools();
 		shapetools = createShapeTools();
 		
 	}
 	
+	private String[] createLabels() {
+		String labels[] = { "Tools", "Colors" };
+		return labels;
+	}
+	
 	private ColorTool[] createColorTools() {
-		ColorTool colorTools[] = { new ColorTool("black", Color.BLACK, can), new ColorTool("red", Color.RED, can), new ColorTool("blue", Color.BLUE, can),
-				new ColorTool("green", Color.GREEN, can) };
+		ColorTool colorTools[] = { new ColorTool("Black", Color.BLACK, can), new ColorTool("Red", Color.RED, can), new ColorTool("Blue", Color.BLUE, can),
+				new ColorTool("Green", Color.GREEN, can) };
 		return colorTools;
 	}
 	
 	private ShapeTool[] createShapeTools() {
-		ShapeTool tools[] = { new ShapeTool("pen", can) {
+		ShapeTool tools[] = { new ShapeTool("Pen", can) {
 			public void mouseDragged(MouseEvent e) {
 				if(!can.clicked) {
 					Path2D.Double path = (Path2D.Double) shape;
@@ -66,7 +72,7 @@ public class Model {
 					can.repaint();
 				}
 			}
-		}, new ShapeTool("rect", can) {
+		}, new ShapeTool("Rect", can) {
 			public void mouseDragged(MouseEvent e) {
 				if(!can.clicked) {
 					Rectangle2D.Double rect = (Rectangle2D.Double) shape;
@@ -80,7 +86,7 @@ public class Model {
 					can.repaint();
 				}
 			}
-		}, new ShapeTool("ellipse", can) {
+		}, new ShapeTool("Ellipse", can) {
 			public void mouseDragged(MouseEvent e) {
 				if(!can.clicked) {
 					Ellipse2D.Double ell = (Ellipse2D.Double) shape;
@@ -94,7 +100,7 @@ public class Model {
 					can.repaint();
 				}
 			}
-		}, new ShapeTool("eraser", can) {
+		}, new ShapeTool("Eraser", can) {
 			public void mouseDragged(MouseEvent e) {
 				if(!can.clicked) {
 					if (findShape(e.getPoint()) != null) {
@@ -109,7 +115,7 @@ public class Model {
 	
 	public ColoredShape findShape(Point p) {
 		for (int i = 0; i < can.shapes.size(); i++) {
-			if (can.shapes.get(i).shape.contains(p)) {
+			if (can.shapes.get(i).getShape().contains(p)) {
 				return can.shapes.get(i);
 			}
 		}

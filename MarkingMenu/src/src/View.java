@@ -14,14 +14,13 @@ public class View {
 	
 	int nb_b;
 	MenuItem[] items;
-	String[] labels;
 	Rectangle[] item_zones;
 	Point p;
 	Point old_p;
 	Canvas can;
 	String type;
 	
-	public View (int nb_b, String label[], String type, Canvas c, Controller control) {
+	public View (String type, Canvas c, Controller control) {
 		
 		this.can = c;
 		model = new Model(can);
@@ -30,22 +29,24 @@ public class View {
 		p = new Point();
 		old_p = new Point();
 		this.type = type;
-//		
-//		items = new Rectangle[nb_b];
-		labels = new String[nb_b];
 		
-		for (int i = 0; i < label.length; i++) {
-			labels[i] = new String(label[i]);
+		if (type.equals("basic")) {
+			nb_b = 2;
+		} else if (type.equals("color")) {
+			nb_b = model.colortools.length;
+		} else if (type.equals("tool")) {
+			nb_b = model.shapetools.length;
 		}
 
 		items = new MenuItem[nb_b];
+		
 		for (int i = 0; i < nb_b; i++) {
 			if (type.equals("basic")) {
-				items[i] = new MenuItem(labels[i], null);
+				items[i] = new MenuItem(model.labels[i], null);
 			} else if (type.equals("color")) {
-				items[i] = new MenuItem(labels[i], model.colortools[i]);
+				items[i] = new MenuItem(model.colortools[i].name, model.colortools[i]);
 			} else if (type.equals("tool")) {
-				items[i] = new MenuItem(labels[i], model.shapetools[i]);
+				items[i] = new MenuItem(model.shapetools[i].name, model.shapetools[i]);
 			}
 		}
 		
