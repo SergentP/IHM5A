@@ -1,0 +1,11 @@
+package src;
+
+import java.awt.Color;
+
+public class ColorTool extends Tool {
+
+	public ColorTool(String name, Color c, Canvas can) {
+		super(name);
+	}
+
+}

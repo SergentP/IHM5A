@@ -1,0 +1,14 @@
+package src;
+
+import java.awt.Point;
+import java.awt.Rectangle;
+
+@SuppressWarnings("serial")
+public class MenuItem extends Rectangle {
+	
+	Point p;
+	
+	public MenuItem (String name) {
+		super(name);
+	}
+}

@@ -1,0 +1,22 @@
+package src;
+
+import java.awt.Color;
+import java.awt.Rectangle;
+
+import javax.swing.JButton;
+
+@SuppressWarnings("serial")
+public class MenuItem extends JButton {
+	
+	Tool tool;
+	Color color;
+	Rectangle rect;
+	
+	public MenuItem (String s, Rectangle r, Tool t, Color c) {
+		super(s);
+		this.setName(s);
+		tool = t;
+		color = c;
+		rect = r;
+	}
+}

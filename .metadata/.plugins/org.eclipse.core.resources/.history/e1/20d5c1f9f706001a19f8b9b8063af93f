@@ -1,0 +1,11 @@
+package src;
+
+public abstract class Tool extends Menu{
+	
+	String name;
+	
+	public Tool(String name) {
+		this.name = name;
+	}
+
+}

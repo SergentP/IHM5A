@@ -1,0 +1,8 @@
+package src;
+
+public class ColoredShape {
+	
+	Shape shape;
+	Color color;
+
+}

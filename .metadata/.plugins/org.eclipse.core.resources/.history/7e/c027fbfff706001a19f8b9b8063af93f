@@ -1,0 +1,11 @@
+package src;
+
+public class Menu {
+	
+	String name;
+	
+	public Menu(String name) {
+		this.name = name;
+	}
+
+}

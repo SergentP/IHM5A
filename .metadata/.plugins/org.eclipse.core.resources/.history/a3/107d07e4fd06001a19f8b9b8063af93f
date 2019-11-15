@@ -1,0 +1,7 @@
+package src;
+
+import javax.swing.event.MouseInputListener;
+
+public class ShapeTool extends Tool implements MouseInputListener {
+
+}

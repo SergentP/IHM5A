@@ -1,0 +1,11 @@
+package src;
+
+import java.awt.Color;
+import java.awt.Shape;
+
+public class ColoredShape {
+	
+	Shape shape;
+	Color color;
+
+}

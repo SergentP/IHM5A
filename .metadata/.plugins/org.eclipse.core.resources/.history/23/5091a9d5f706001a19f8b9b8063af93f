@@ -1,0 +1,12 @@
+package src;
+
+public abstract class Tool {
+	
+	String name;
+	
+	public Tool(String name) {
+		super(name);
+		this.name = name;
+	}
+
+}

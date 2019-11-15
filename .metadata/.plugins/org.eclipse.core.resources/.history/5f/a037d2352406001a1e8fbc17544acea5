@@ -1,0 +1,100 @@
+package src;
+
+import static java.lang.Math.abs;
+import static java.lang.Math.min;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Vector;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
+import javax.swing.event.MouseInputListener;
+
+@SuppressWarnings("serial")
+class Paint extends JFrame {
+
+	Canvas can;
+	Vector<ColoredShape> shapes = new Vector<ColoredShape>();
+	Color c = Color.BLACK;
+	
+	public Paint(String title) {
+
+		super(title);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(800, 600));
+		setLocationRelativeTo(null);
+		
+		final JButton blue = new JButton();
+		blue.setBackground(Color.BLUE);
+		blue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c = Color.BLUE;
+			}
+		});
+		
+		final JButton red = new JButton();
+		red.setBackground(Color.RED);
+		red.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c = Color.RED;
+			}
+		});
+
+		final JButton black = new JButton();
+		black.setBackground(Color.BLACK);
+		black.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c = Color.BLACK;
+			}
+		});
+
+		add(new JToolBar() {
+			{
+				add(black);
+				add(red);
+				add(blue);
+
+			}
+		}, BorderLayout.SOUTH);
+
+		add(new JToolBar() {
+			{
+				for (AbstractAction tool : tools) {
+					add(tool);
+				}
+			}
+		}, BorderLayout.NORTH);
+
+		can = new Canvas(shapes);
+		add(can);
+
+		pack();
+		setVisible(true);
+
+	}
+
+	/* main *********************************************************************/
+
+	public static void main(String argv[]) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				@SuppressWarnings("unused")
+				Paint main = new Paint("paint");
+			}
+		});
+	}
+
+}

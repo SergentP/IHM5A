@@ -1,0 +1,9 @@
+package src;
+
+public class ColorTool extends Tool {
+
+	public ColorTool(String name) {
+		super(name);
+	}
+
+}

@@ -1,0 +1,21 @@
+package src;
+
+import java.awt.Color;
+
+public class ColorTool {
+	
+	String name;
+	private Color color;
+	Canvas can;
+
+	public ColorTool(String name, Color c, Canvas can) {
+		this.name = name;
+		this.color = c;
+		this.can = can;	
+	}
+
+	public void execute() {
+		can.setColor(color);
+	}
+
+}
