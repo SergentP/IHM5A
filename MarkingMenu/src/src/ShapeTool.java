@@ -1,5 +1,6 @@
 package src;
 
+import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
@@ -13,6 +14,8 @@ public class ShapeTool extends Tool implements MouseInputListener {
 	Point o;
 	Shape shape;
 	Canvas can;
+	Cursor base_cursor = Cursor.getDefaultCursor();
+	Cursor cursor = new Cursor(Cursor.CROSSHAIR_CURSOR);
 
 	public ShapeTool(String name, Canvas can) {
 		super(name);
@@ -29,10 +32,12 @@ public class ShapeTool extends Tool implements MouseInputListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
+		can.setCursor(cursor);
 		o = e.getPoint();
 	}
 
 	public void mouseReleased(MouseEvent e) {
+		can.setCursor(base_cursor);
 		shape = null;
 	}
 
@@ -57,7 +62,7 @@ public class ShapeTool extends Tool implements MouseInputListener {
 	public void setPoint(Point p) {
 		this.o = p;
 	}
-
+	
 	@Override
 	public void execute() {
 		System.out.println("using tool " + this.name);

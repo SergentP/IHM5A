@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
@@ -27,7 +28,7 @@ public class Canvas extends JPanel {
 	MenuState state = MenuState.Idle;
 
 	String labels[] = { "Tools", "Colors" };
-	String tools[] = { "Pen", "Rect", "Ellipse" };
+	String tools[] = { "Pen", "Rect", "Ellipse", "Eraser" };
 	String colors[] = {"Black", "Red", "Blue", "Green"};
 	Controller controller = new Controller(this);
 	View menu = new View(labels.length, labels, "basic", this, controller);
@@ -75,7 +76,7 @@ public class Canvas extends JPanel {
 		addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON3 && state == MenuState.Idle) {
+				if (e.getButton() == MouseEvent.BUTTON3 && state == MenuState.Idle && !expert_mode) {
 					clicked = true;
 					state = MenuState.MenuOpened;
 					menu.setOldPoint(e.getPoint());
@@ -88,12 +89,23 @@ public class Canvas extends JPanel {
 			}
 
 			public void mousePressed(MouseEvent e) {
+				if(e.getButton() == MouseEvent.BUTTON3 && state == MenuState.Idle && expert_mode) {
+					clicked = true;
+					state = MenuState.MenuOpened;
+					menu.setOldPoint(e.getPoint());
+					menu.setPoint(e.getPoint());
+				}
+				repaint();
 			}
 
 			public void mouseReleased(MouseEvent e) {
-			}
-
-			public void mouseDragged(MouseEvent e) {
+				if(e.getButton() == MouseEvent.BUTTON3 && expert_mode) {
+					clicked = false;
+					if(expert_mode) {
+						state = MenuState.Idle;
+					}
+				}
+				repaint();
 			}
 			
 		});
@@ -102,13 +114,20 @@ public class Canvas extends JPanel {
 			
 			public void mouseMoved(MouseEvent me) {
 				setPoint(me.getPoint());
-				if(expert_mode) {
+				/*if(expert_mode) {
 					controller.handleMoved(me);
-				}
+				}*/
 				repaint();
 			}
 
 			public void mouseDragged(MouseEvent me) {
+				if(SwingUtilities.isRightMouseButton(me) && expert_mode) {
+					menu.setOldPoint(me.getPoint());
+					colorMenu.setOldPoint(menu.getOldPoint());
+					toolMenu.setOldPoint(menu.getOldPoint());
+					controller.handleDragged(me);
+				}
+				repaint();
 			}
 			
 		});

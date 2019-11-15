@@ -94,7 +94,25 @@ public class Model {
 					can.repaint();
 				}
 			}
-		} };
+		}, new ShapeTool("eraser", can) {
+			public void mouseDragged(MouseEvent e) {
+				if(!can.clicked) {
+					if (findShape(e.getPoint()) != null) {
+						can.shapes.remove(findShape(e.getPoint()));
+					}
+					can.repaint();
+				}
+			}
+		}};
 		return tools;
+	}
+	
+	public ColoredShape findShape(Point p) {
+		for (int i = 0; i < can.shapes.size(); i++) {
+			if (can.shapes.get(i).shape.contains(p)) {
+				return can.shapes.get(i);
+			}
+		}
+		return null;
 	}
 }

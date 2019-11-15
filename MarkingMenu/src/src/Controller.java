@@ -54,8 +54,42 @@ public class Controller implements MouseListener, MouseMotionListener{
 		canvas.repaint();
 	}
 
-	public void handleDragged(MouseEvent e) {
-		
+	public void handleDragged(MouseEvent me) {
+		switch (canvas.state) {
+		case MenuOpened:
+			if (canvas.menu.contain(me.getPoint()) != null) {
+				MenuItem mI = canvas.menu.contain(me.getPoint());
+				if (mI.getName().equals("Tools")) {
+					canvas.state = MenuState.ToolMenuOpened;
+					canvas.toolMenu.setOldPoint(canvas.menu.getOldPoint());
+					canvas.toolMenu.setPoint(me.getPoint());
+				}
+				else if (mI.getName().equals("Colors")) {
+					canvas.state = MenuState.ColorMenuOpened;
+					canvas.colorMenu.setOldPoint(canvas.menu.getOldPoint());
+					canvas.colorMenu.setPoint(me.getPoint());
+				}
+			}
+			break;
+		case ColorMenuOpened:
+			if (canvas.colorMenu.contain(me.getPoint()) != null) {
+				MenuItem mI = canvas.colorMenu.contain(me.getPoint());
+				mI.tool.execute();
+				canvas.state = MenuState.Idle;
+				System.out.println("color " + mI.getName() + " selected");
+			}
+			break;
+		case ToolMenuOpened:
+			if (canvas.toolMenu.contain(me.getPoint()) != null) {
+				MenuItem mI = canvas.toolMenu.contain(me.getPoint());
+				mI.tool.execute();
+				canvas.state = MenuState.Idle;
+			}
+			break;
+		default:
+			break;
+		}
+		canvas.repaint();
 	}
 	
 	public void mouseDragged(MouseEvent e) {
@@ -82,19 +116,19 @@ public class Controller implements MouseListener, MouseMotionListener{
 			break;
 		case ColorMenuOpened:
 			if (canvas.colorMenu.isPresent(button.getName())) {
-				canvas.clicked = false;
 				button.tool.execute();
 				canvas.colorMenu.clearmenu();
 				canvas.state = MenuState.Idle;
+				canvas.clicked = false;
 				System.out.println("color " + button.getName() + " selected");
 			}
 			break;
 		case ToolMenuOpened:
 			if (canvas.toolMenu.isPresent(button.getName())) {
-				canvas.clicked = false;
 				button.tool.execute();
 				canvas.toolMenu.clearmenu();
 				canvas.state = MenuState.Idle;
+				canvas.clicked = false;
 			}
 			break;
 		default:
