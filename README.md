@@ -17,3 +17,11 @@ Après avoir ouvert le premier menu, il suffit de cliquer sur un bouton de ce de
 Le "mode expert" permet à l'utilisateur de maintenir le clic droit de sa souris pour passer en marking menu invisible et choisir l'item désiré en glissant la souris vers la position du premier bouton puis du deuxième (le chemin doit être mémorisé).
 
 Pour lancer l'application il suffit de lancer le main de la classe Main.
+
+## Limites de l'application
+
+Nous n'avons pas eu le temps d'implémenter un bouton "back" ou bien une fonction permettant de fermer le menu une fois ouvert si une erreur a été faite par l'utilisateur. De plus, nous n'avons pas non plus eu le temps non plus de gérer l'affichage du menu en fonction des bords de la fenêtre.
+
+Lors de l'utilisation du marking menu nous aurions voulu que l'item sélectionné s'affiche pendant un cours instant pour signifier visuellement à l'utilisateur l'outil ou la couleur qu'il a sélectionné, néanmoins, même si nous arrivions à afficher l'item ou la couleur sélectionné, nous n'arrivions pas à le faire disparaître après un certain temps. Nous n'avons donc pas ajouté cette fonction.
+
+Lorsque nous affichons plus de 8 items sur un menu, les items se mettent en dessous de menu (de l'item le plus bas), et donc, pour le mode non expert cela ne pose pas de problèmes, néanmoins, pour le mode expert, il n'est donc pas possible de sélectionner ces items, pour gérer cela il aurait fallu sûrement implémenter un timer pour dire que si on reste un certain temps sur un item, il est sélectionné. De ce fait les items en dessous seraient sélectionnables.
