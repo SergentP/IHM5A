@@ -14,6 +14,8 @@ public class Controller implements MouseListener, MouseMotionListener{
 		canvas = c;
 	}
 
+	//Handle when the mouse is dragged on the canvas during expert mode
+	
 	public void handleDragged(MouseEvent me) {
 		switch (canvas.state) {
 		case MenuOpened:
@@ -57,6 +59,8 @@ public class Controller implements MouseListener, MouseMotionListener{
 
 	public void mouseMoved(MouseEvent e) {
 	}
+	
+	//Handle when a button is clicked in the menu 
 
 	public void mouseClicked(MouseEvent e) {
 		MenuItem button = (MenuItem) e.getSource();

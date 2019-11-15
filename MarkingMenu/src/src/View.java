@@ -120,6 +120,8 @@ public class View {
 		return false;
 	}
 	
+	//Paint the menu on the canvas with different options whether the expert mode is on or off
+	
 	public void paintComponent(Graphics g, boolean em) {
 		
 		Graphics2D g2 = (Graphics2D) g;

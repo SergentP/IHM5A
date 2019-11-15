@@ -140,6 +140,8 @@ public class Canvas extends JPanel {
 		});
 	}
 
+	//Paint canvas and the menu opened if there is one
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
