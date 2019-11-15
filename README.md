@@ -26,6 +26,6 @@ Lors de l'utilisation du marking menu nous aurions voulu que l'item sélectionn�
 
 Lorsque nous affichons plus de 8 items sur un menu, les items se mettent en dessous de menu (de l'item le plus bas), et donc, pour le mode non expert cela ne pose pas de problèmes, néanmoins, pour le mode expert, il n'est donc pas possible de sélectionner ces items, pour gérer cela il aurait fallu sûrement implémenter un timer pour dire que si on reste un certain temps sur un item, il est sélectionné. De ce fait les items en dessous seraient sélectionnables.
 
-## Choix implémentations
+## Choix d'implémentations
 
 Nous avons décidé d'avoir deux modes, un mode expert et un mode débutant. Dans le mode débutant le menu est affiché et il faut cliquer sur les boutons des menus pour les faire fonctionner. Dans le mode expert, le menu n'est plus affiché et les items sont sélectionnées en rentrant en contact avec elles en déplacant le souris. Le mode expert offre donc un grand gain de temps.
