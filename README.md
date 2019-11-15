@@ -1,4 +1,4 @@
-# TP1 IHM INFO5
+# TP2 IHM INFO5 - Schanen Loïc - Pelisson Antoine
 
 ## Structure du projet
 
