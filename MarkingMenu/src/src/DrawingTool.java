@@ -7,9 +7,9 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.event.MouseInputListener;
 
-public class ShapeTool extends Tool implements MouseInputListener {
+public class DrawingTool extends Tool implements MouseInputListener {
 
-	public static ShapeTool tool;
+	public static DrawingTool tool;
 	
 	Point o;
 	Shape shape;
@@ -17,7 +17,7 @@ public class ShapeTool extends Tool implements MouseInputListener {
 	Cursor base_cursor = Cursor.getDefaultCursor();
 	Cursor cursor = new Cursor(Cursor.CROSSHAIR_CURSOR);
 
-	public ShapeTool(String name, Canvas can) {
+	public DrawingTool(String name, Canvas can) {
 		super(name);
 		this.can = can;
 	}

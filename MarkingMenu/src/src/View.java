@@ -1,11 +1,13 @@
 package src;
 
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Stroke;
 
 public class View {
 	
@@ -56,7 +58,7 @@ public class View {
 	public void printmenu() {
 		for (int i = 0; i < items.length; i++) {
 			if (i < 8) {
-				items[i].setBounds(p.x - 40 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 80, 20);
+				items[i].setBounds(p.x - 40 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 90, 20);
 			} else {
 				items[i].setBounds(p.x - 40, p.y + (i-5)*50, 80, 20);
 			}
@@ -108,8 +110,11 @@ public class View {
 	public void paintComponent(Graphics g, boolean em) {
 		
 		Graphics2D g2 = (Graphics2D) g;
-		
+
+		Stroke stroke = new BasicStroke(5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_MITER);
 		g2.setColor(Color.BLACK);
+		g2.setStroke(stroke);
+
 		g2.drawLine(p.x, p.y, can.getPoint().x, can.getPoint().y);
 		
 		if(em) {
@@ -131,6 +136,8 @@ public class View {
 				g2.fill(item_zones[i]);
 			}
 			
+		} else if (!em) {
+			g2.drawOval(p.x-5, p.y-5, 10, 10);
 		}
 		
 	}

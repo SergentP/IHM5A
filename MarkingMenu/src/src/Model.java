@@ -16,7 +16,7 @@ public class Model {
 	MenuItem items[];
 	String[] labels;
 	ColorTool[] colortools;
-	ShapeTool[] shapetools;
+	DrawingTool[] shapetools;
 	
 	static double pi = Math.PI;
 	
@@ -28,14 +28,14 @@ public class Model {
 	}
 	
 	static Point coord_circ[] = {
-			polar(pi,120), 
-			polar(0,120), 
-			polar(pi*3/2,120), 
-			polar(pi*1/2,120),
-			polar(pi*3/4,120), 
-			polar(pi*1/4,120), 
-			polar(pi*7/4,120),  
-			polar(pi*5/4,120)
+			polar(pi,130), 
+			polar(0,130), 
+			polar(pi*3/2,130), 
+			polar(pi*1/2,130),
+			polar(pi*3/4,130), 
+			polar(pi*1/4,130), 
+			polar(pi*7/4,130),  
+			polar(pi*5/4,130)
 		};
 	
 	public Model(Canvas can) {
@@ -53,12 +53,12 @@ public class Model {
 	
 	private ColorTool[] createColorTools() {
 		ColorTool colorTools[] = { new ColorTool("Black", Color.BLACK, can), new ColorTool("Red", Color.RED, can), new ColorTool("Blue", Color.BLUE, can),
-				new ColorTool("Green", Color.GREEN, can) };
+				new ColorTool("Green", Color.GREEN, can), new ColorTool("Yellow", Color.YELLOW, can), new ColorTool("Orange", Color.ORANGE, can), new ColorTool("Violet", Color.MAGENTA, can) , new ColorTool("Cyan", Color.CYAN, can)};
 		return colorTools;
 	}
 	
-	private ShapeTool[] createShapeTools() {
-		ShapeTool tools[] = { new ShapeTool("Pen", can) {
+	private DrawingTool[] createShapeTools() {
+		DrawingTool tools[] = { new DrawingTool("Pen", can) {
 			public void mouseDragged(MouseEvent e) {
 				if(!can.clicked) {
 					Path2D.Double path = (Path2D.Double) shape;
@@ -72,7 +72,7 @@ public class Model {
 					can.repaint();
 				}
 			}
-		}, new ShapeTool("Rect", can) {
+		}, new DrawingTool("Rect", can) {
 			public void mouseDragged(MouseEvent e) {
 				if(!can.clicked) {
 					Rectangle2D.Double rect = (Rectangle2D.Double) shape;
@@ -86,7 +86,7 @@ public class Model {
 					can.repaint();
 				}
 			}
-		}, new ShapeTool("Ellipse", can) {
+		}, new DrawingTool("Ellipse", can) {
 			public void mouseDragged(MouseEvent e) {
 				if(!can.clicked) {
 					Ellipse2D.Double ell = (Ellipse2D.Double) shape;
@@ -100,7 +100,7 @@ public class Model {
 					can.repaint();
 				}
 			}
-		}, new ShapeTool("Eraser", can) {
+		}, new DrawingTool("Eraser", can) {
 			public void mouseDragged(MouseEvent e) {
 				if(!can.clicked) {
 					if (findShape(e.getPoint()) != null) {
