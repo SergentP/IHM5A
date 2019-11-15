@@ -17,8 +17,21 @@ public class Canvas extends JPanel {
 
 	Vector<ColoredShape> shapes;
 	Color c = Color.BLACK;
+	
 	boolean clicked;
+	public void setClicked(boolean clicked) {
+		this.clicked = clicked;
+	}
+
 	boolean expert_mode;
+	public boolean isExpert_mode() {
+		return expert_mode;
+	}
+
+	public void setExpert_mode(boolean expert_mode) {
+		this.expert_mode = expert_mode;
+	}
+
 	Point actual_point;
 
 	public enum MenuState {
@@ -111,9 +124,6 @@ public class Canvas extends JPanel {
 			
 			public void mouseMoved(MouseEvent me) {
 				setPoint(me.getPoint());
-				/*if(expert_mode) {
-					controller.handleMoved(me);
-				}*/
 				repaint();
 			}
 

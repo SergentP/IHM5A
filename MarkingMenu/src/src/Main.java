@@ -28,25 +28,6 @@ class Main extends JFrame {
 
 		can = new Canvas(shapes);
 		
-		final JButton red = new JButton();
-		red.setBackground(Color.RED);
-		red.setPreferredSize(new Dimension(20,20));
-		red.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				can.setColor(Color.RED);
-				System.out.println("color Red selected");
-			}
-		});
-
-		final JButton black = new JButton();
-		black.setBackground(Color.BLACK);
-		black.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				can.setColor(Color.BLACK);
-				System.out.println("color Black selected");
-			}
-		});
-		
 		final JButton expert = new JButton("Mode Expert");
 		expert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,22 +49,6 @@ class Main extends JFrame {
 
 			}
 		}, BorderLayout.NORTH);
-
-		add(new JToolBar() {
-			{
-				add(black);
-				add(red);
-
-			}
-		}, BorderLayout.SOUTH);
-
-		/*add(new JToolBar() {
-			{
-				for (AbstractAction tool : tools) {
-					add(tool);
-				}
-			}
-		}, BorderLayout.NORTH);*/
 		
 		add(can);
 

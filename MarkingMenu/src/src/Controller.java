@@ -13,46 +13,6 @@ public class Controller implements MouseListener, MouseMotionListener{
 	public Controller(Canvas c) {
 		canvas = c;
 	}
-	
-	public void handleMoved(MouseEvent me) {
-		switch (canvas.state) {
-		case MenuOpened:
-			if (canvas.menu.contain(me.getPoint()) != null) {
-				MenuItem mI = canvas.menu.contain(me.getPoint());
-				if (mI.getName().equals("Tools")) {
-					canvas.state = MenuState.ToolMenuOpened;
-					canvas.toolMenu.setOldPoint(canvas.menu.getOldPoint());
-					canvas.toolMenu.setPoint(me.getPoint());
-				}
-				else if (mI.getName().equals("Colors")) {
-					canvas.state = MenuState.ColorMenuOpened;
-					canvas.colorMenu.setOldPoint(canvas.menu.getOldPoint());
-					canvas.colorMenu.setPoint(me.getPoint());
-				}
-			}
-			break;
-		case ColorMenuOpened:
-			if (canvas.colorMenu.contain(me.getPoint()) != null) {
-				MenuItem mI = canvas.colorMenu.contain(me.getPoint());
-				canvas.clicked = false;
-				mI.tool.execute();
-				canvas.state = MenuState.Idle;
-				System.out.println("color " + mI.getName() + " selected");
-			}
-			break;
-		case ToolMenuOpened:
-			if (canvas.toolMenu.contain(me.getPoint()) != null) {
-				MenuItem mI = canvas.toolMenu.contain(me.getPoint());
-				canvas.clicked = false;
-				mI.tool.execute();
-				canvas.state = MenuState.Idle;
-			}
-			break;
-		default:
-			break;
-		}
-		canvas.repaint();
-	}
 
 	public void handleDragged(MouseEvent me) {
 		switch (canvas.state) {
@@ -119,7 +79,7 @@ public class Controller implements MouseListener, MouseMotionListener{
 				button.tool.execute();
 				canvas.colorMenu.clearmenu();
 				canvas.state = MenuState.Idle;
-				canvas.clicked = false;
+				canvas.setClicked(false);
 				System.out.println("color " + button.getName() + " selected");
 			}
 			break;
@@ -128,7 +88,7 @@ public class Controller implements MouseListener, MouseMotionListener{
 				button.tool.execute();
 				canvas.toolMenu.clearmenu();
 				canvas.state = MenuState.Idle;
-				canvas.clicked = false;
+				canvas.setClicked(false);
 			}
 			break;
 		default:

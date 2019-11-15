@@ -17,5 +17,9 @@ public class ColorTool extends Tool {
 	public void execute() {
 		can.setColor(color);
 	}
+	
+	public Color getColor() {
+		return color;
+	}
 
 }

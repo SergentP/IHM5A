@@ -28,14 +28,14 @@ public class Model {
 	}
 	
 	static Point coord_circ[] = {
-			polar(pi,130), 
-			polar(0,130), 
-			polar(pi*3/2,130), 
-			polar(pi*1/2,130),
-			polar(pi*3/4,130), 
-			polar(pi*1/4,130), 
-			polar(pi*7/4,130),  
-			polar(pi*5/4,130)
+			polar(pi,100), 
+			polar(0,100), 
+			polar(pi*3/2,100), 
+			polar(pi*1/2,100),
+			polar(pi*3/4,100), 
+			polar(pi*1/4,100), 
+			polar(pi*7/4,100),  
+			polar(pi*5/4,100)
 		};
 	
 	public Model(Canvas can) {
@@ -53,7 +53,7 @@ public class Model {
 	
 	private ColorTool[] createColorTools() {
 		ColorTool colorTools[] = { new ColorTool("Black", Color.BLACK, can), new ColorTool("Red", Color.RED, can), new ColorTool("Blue", Color.BLUE, can),
-				new ColorTool("Green", Color.GREEN, can), new ColorTool("Yellow", Color.YELLOW, can), new ColorTool("Orange", Color.ORANGE, can), new ColorTool("Violet", Color.MAGENTA, can) , new ColorTool("Cyan", Color.CYAN, can)};
+				new ColorTool("Green", Color.GREEN, can), new ColorTool("Yellow", Color.YELLOW, can), new ColorTool("Orange", Color.ORANGE, can), new ColorTool("Purple", Color.MAGENTA, can) , new ColorTool("Cyan", Color.CYAN, can)};
 		return colorTools;
 	}
 	
@@ -104,7 +104,7 @@ public class Model {
 			public void mouseDragged(MouseEvent e) {
 				if(!can.clicked) {
 					if (findShape(e.getPoint()) != null) {
-						can.shapes.remove(findShape(e.getPoint()));
+						can.getShapes().remove(findShape(e.getPoint()));
 					}
 					can.repaint();
 				}
@@ -115,8 +115,8 @@ public class Model {
 	
 	public ColoredShape findShape(Point p) {
 		for (int i = 0; i < can.shapes.size(); i++) {
-			if (can.shapes.get(i).getShape().contains(p)) {
-				return can.shapes.get(i);
+			if (can.getShapes().get(i).getShape().contains(p)) {
+				return can.getShapes().get(i);
 			}
 		}
 		return null;

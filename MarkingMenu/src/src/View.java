@@ -67,6 +67,19 @@ public class View {
 		}
 	}
 	
+	public void printItem(MenuItem item) {
+		for (int i = 0; i < items.length; i++) {
+			if(items[i].equals(item)) {
+				if (i < 8) {
+					items[i].setBounds(p.x - 40 + Model.coord_circ[i].x, p.y - 15 + Model.coord_circ[i].y, 90, 20);
+				} else if (items[i].equals(item)){
+					items[i].setBounds(p.x - 40, p.y + (i-5)*50, 80, 20);
+				}
+				can.add(items[i]);
+			}
+		}
+	}
+	
 	public void clearmenu() {
 		for (int i = 0; i < items.length; i++) {
 			can.remove(items[i]);
