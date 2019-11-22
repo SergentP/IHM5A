@@ -14,6 +14,7 @@ function multiTouch(element: HTMLElement) : void {
             }
             return null;
         };
+    pointerId_2 = null; 
     enum MT_STATES {Inactive, Translating, Rotozooming}
     let fsm = FSM.parse<MT_STATES>( {
         initialState: MT_STATES.Inactive,
@@ -39,11 +40,12 @@ function multiTouch(element: HTMLElement) : void {
                 action: (evt : TouchEvent) : boolean => {
                     evt.preventDefault();
                     evt.stopPropagation();
-                    const touch = getRelevantDataFromEvent(evt);
                     if (pointerId_1 !== null) {
+                        const touch = getRelevantDataFromEvent(evt);
                         Pt1_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
                         transfo.drag(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent);
                     } else if (pointerId_2 !== null) {
+                        const touch = getRelevantDataFromEvent(evt);
                         Pt2_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
                         transfo.drag(element, originalMatrix, Pt2_coord_element, Pt2_coord_parent);
                     }
