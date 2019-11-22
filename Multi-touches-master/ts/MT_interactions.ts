@@ -14,13 +14,13 @@ function multiTouch(element: HTMLElement) : void {
             }
             return null;
         };
-    pointerId_2 = null; 
+    pointerId_2 = null; // l.88: we must initialize pointeurId_2 at null in order to be able to rotozoom for the first time
     enum MT_STATES {Inactive, Translating, Rotozooming}
     let fsm = FSM.parse<MT_STATES>( {
         initialState: MT_STATES.Inactive,
         states: [MT_STATES.Inactive, MT_STATES.Translating, MT_STATES.Rotozooming],
         transitions : [
-            { from: MT_STATES.Inactive, to: MT_STATES.Translating,
+            { from: MT_STATES.Inactive, to: MT_STATES.Translating, // first touch on the screen
                 eventTargets: [element],
                 eventName: ["touchstart"],
                 useCapture: false,
@@ -33,7 +33,7 @@ function multiTouch(element: HTMLElement) : void {
                     return true;
                 }
             },
-            { from: MT_STATES.Translating, to: MT_STATES.Translating,
+            { from: MT_STATES.Translating, to: MT_STATES.Translating, // any drag after the first touch and before the second
                 eventTargets: [document],
                 eventName: ["touchmove"],
                 useCapture: true,
@@ -54,7 +54,7 @@ function multiTouch(element: HTMLElement) : void {
                 }
             },
             { from: MT_STATES.Translating,
-                to: MT_STATES.Inactive,
+                to: MT_STATES.Inactive, // release of the last touch on the screen
                 eventTargets: [document],
                 eventName: ["touchend"],
                 useCapture: true,
@@ -74,7 +74,7 @@ function multiTouch(element: HTMLElement) : void {
                     return true;
                 }
             },
-            { from: MT_STATES.Translating, to: MT_STATES.Rotozooming,
+            { from: MT_STATES.Translating, to: MT_STATES.Rotozooming, // second touch on the screen
                 eventTargets: [element],
                 eventName: ["touchstart"],
                 useCapture: false,
@@ -94,7 +94,7 @@ function multiTouch(element: HTMLElement) : void {
                     }
                 }
             },
-            { from: MT_STATES.Rotozooming, to: MT_STATES.Rotozooming,
+            { from: MT_STATES.Rotozooming, to: MT_STATES.Rotozooming, // any drag of any of the two first touch on the screen
                 eventTargets: [document],
                 eventName: ["touchmove"],
                 useCapture: true,
@@ -114,13 +114,15 @@ function multiTouch(element: HTMLElement) : void {
                 }
             },
             { from: MT_STATES.Rotozooming,
-                to: MT_STATES.Translating,
+                to: MT_STATES.Translating, // release of the penultimate touch on the screen
                 eventTargets: [document],
                 eventName: ["touchend"],
                 useCapture: true,
                 action: (evt : TouchEvent) : boolean => {
                     const touch = getRelevantDataFromEvent(evt);
                     if(touch.identifier === pointerId_1) {
+                        // this is the reason why most of the transitions have an if statement to check if pointerId_1 is/isn't null
+                        // and an else if to check if pointerId_2 is/isn't null so that no third touch is taken into account
                         pointerId_1 = null;
                         Pt1_coord_element = null;
                         Pt1_coord_parent = null;
