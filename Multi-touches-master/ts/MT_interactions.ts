@@ -43,7 +43,7 @@ function multiTouch(element: HTMLElement) : void {
                     if (pointerId_1 !== null) {
                         Pt1_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
                         transfo.drag(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent);
-                    } else {
+                    } else if (pointerId_2 !== null) {
                         Pt2_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
                         transfo.drag(element, originalMatrix, Pt2_coord_element, Pt2_coord_parent);
                     }
@@ -83,7 +83,7 @@ function multiTouch(element: HTMLElement) : void {
                         Pt1_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
                         Pt1_coord_element = Pt1_coord_parent.matrixTransform(originalMatrix.inverse());
                         return true;
-                    } else {
+                    } else if (pointerId_2 === null) {
                         pointerId_2 = evt.changedTouches.item(0).identifier;
                         const touch = getRelevantDataFromEvent(evt);
                         Pt2_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
