@@ -51,28 +51,42 @@ export let getMatrixFromElement = (element: Element) : SVGMatrix => {
 
 //______________________________________________________________________________________________________________________
 export let drag =       ( element               : HTMLElement
-                        , originalMatrix        : SVGMatrix
-                        , Pt_coord_element      : SVGPoint
-                        , Pt_coord_parent       : SVGPoint
-                        ) => {
-    let m = svg.createSVGMatrix();
-    m.a = originalMatrix.a;
-    m.b = originalMatrix.b;
-    m.c = originalMatrix.c;
-    m.d = originalMatrix.d;
-    m.e = Pt_coord_parent.x - originalMatrix.a * Pt_coord_element.x - originalMatrix.c * Pt_coord_element.y;
-    m.f = Pt_coord_parent.y - originalMatrix.b * Pt_coord_element.x - originalMatrix.d * Pt_coord_element.y;
-    setMatrixToElement(element,m);
+                          , originalMatrix        : SVGMatrix
+                          , Pt_coord_element      : SVGPoint
+                          , Pt_coord_parent       : SVGPoint) => {
+
+    let e = Pt_coord_parent.x - originalMatrix.a * Pt_coord_element.x - originalMatrix.c * Pt_coord_element.y;
+    let f = Pt_coord_parent.y - originalMatrix.b * Pt_coord_element.x - originalMatrix.d * Pt_coord_element.y;
+    setMatrixCoordToElement(element, originalMatrix.a, originalMatrix.b, originalMatrix.c, originalMatrix.d, e, f);
 };
 
 //______________________________________________________________________________________________________________________
 export let rotozoom =   ( element           : HTMLElement
-                        , originalMatrix    : SVGMatrix
-                        , Pt1_coord_element : SVGPoint
-                        , Pt1_coord_parent  : SVGPoint
-                        , Pt2_coord_element : SVGPoint
-                        , Pt2_coord_parent  : SVGPoint
-                        ) => {
-	// TO BE DONE
-};
+                          , originalMatrix    : SVGMatrix
+                          , Pt1_coord_element : SVGPoint
+                          , Pt1_coord_parent  : SVGPoint
+                          , Pt2_coord_element : SVGPoint
+                          , Pt2_coord_parent  : SVGPoint) => {
+    let c = 0;
+    let s = 0;
+    let dx = Pt2_coord_element.x - Pt1_coord_element.x;
+    let dy = Pt2_coord_element.y - Pt1_coord_element.y;
+    let dx2 = Pt2_coord_parent.x - Pt1_coord_parent.x;
+    let dy2 = Pt2_coord_parent.y - Pt1_coord_parent.y;
+    if (dx === 0 && dy === 0) {
+        return;
+    } else if (dx === 0) {
+        s = -dx2 / dy2;
+        c = dy2 / dy;
+    } else if (dy === 0) {
+        s = dy2 / dx;
+        c = dx2 / dx;
+    } else {
+        s = (dy2/dy - dx2/dx) / (dy/dx + dx/dy);
+        c = (dy2 - s*dx) / dy;
+    }
+    let e = Pt1_coord_parent.x - c * Pt1_coord_element.x + s * Pt1_coord_element.y;
+    let f = Pt1_coord_parent.y - s * Pt1_coord_element.x - c * Pt1_coord_element.y;
 
+    setMatrixCoordToElement(element, c, s, -s, c, e, f);
+};

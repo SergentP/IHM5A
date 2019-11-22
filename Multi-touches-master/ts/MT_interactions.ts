@@ -40,8 +40,13 @@ function multiTouch(element: HTMLElement) : void {
                     evt.preventDefault();
                     evt.stopPropagation();
                     const touch = getRelevantDataFromEvent(evt);
-                    Pt1_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
-                    transfo.drag(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent);
+                    if (pointerId_1 !== null) {
+                        Pt1_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
+                        transfo.drag(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent);
+                    } else {
+                        Pt2_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
+                        transfo.drag(element, originalMatrix, Pt2_coord_element, Pt2_coord_parent);
+                    }
                     originalMatrix = transfo.getMatrixFromElement(element);
                     return true;
                 }
@@ -58,6 +63,11 @@ function multiTouch(element: HTMLElement) : void {
                         originalMatrix = null;
                         Pt1_coord_element = null;
                         Pt1_coord_parent = null;
+                    } else if (touch.identifier === pointerId_2) {
+                        pointerId_2 = null;
+                        originalMatrix = null;
+                        Pt2_coord_element = null;
+                        Pt2_coord_parent = null;
                     }
                     return true;
                 }
@@ -67,8 +77,19 @@ function multiTouch(element: HTMLElement) : void {
                 eventName: ["touchstart"],
                 useCapture: false,
                 action: (evt : TouchEvent) : boolean => {
-                    // To be completed
-                    return true;
+                    if (pointerId_1 === null) {
+                        pointerId_1 = evt.changedTouches.item(0).identifier;
+                        const touch = getRelevantDataFromEvent(evt);
+                        Pt1_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
+                        Pt1_coord_element = Pt1_coord_parent.matrixTransform(originalMatrix.inverse());
+                        return true;
+                    } else {
+                        pointerId_2 = evt.changedTouches.item(0).identifier;
+                        const touch = getRelevantDataFromEvent(evt);
+                        Pt2_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
+                        Pt2_coord_element = Pt2_coord_parent.matrixTransform(originalMatrix.inverse());
+                        return true;
+                    }
                 }
             },
             { from: MT_STATES.Rotozooming, to: MT_STATES.Rotozooming,
@@ -78,7 +99,15 @@ function multiTouch(element: HTMLElement) : void {
                 action: (evt : TouchEvent) : boolean => {
                     evt.preventDefault();
                     evt.stopPropagation();
-                    // To be completed
+                    const touch = getRelevantDataFromEvent(evt);
+                    if (touch.identifier === pointerId_1) {
+                        Pt1_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
+                        transfo.rotozoom(element, originalMatrix, Pt1_coord_element, Pt1_coord_parent, Pt2_coord_element, Pt2_coord_parent);
+                    } else if (touch.identifier === pointerId_2) {
+                        Pt2_coord_parent = transfo.getPoint(touch.clientX, touch.clientY);
+                        transfo.rotozoom(element, originalMatrix, Pt2_coord_element, Pt2_coord_parent, Pt1_coord_element, Pt1_coord_parent);
+                    }
+                    originalMatrix = transfo.getMatrixFromElement(element);
                     return true;
                 }
             },
@@ -89,7 +118,15 @@ function multiTouch(element: HTMLElement) : void {
                 useCapture: true,
                 action: (evt : TouchEvent) : boolean => {
                     const touch = getRelevantDataFromEvent(evt);
-                    // To be completed
+                    if(touch.identifier === pointerId_1) {
+                        pointerId_1 = null;
+                        Pt1_coord_element = null;
+                        Pt1_coord_parent = null;
+                    } else if (touch.identifier === pointerId_2) {
+                        pointerId_2 = null;
+                        Pt2_coord_element = null;
+                        Pt2_coord_parent = null;
+                    }
                     return true;
                 }
             }
